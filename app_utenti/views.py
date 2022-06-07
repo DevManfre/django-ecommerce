@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from hashlib import md5
@@ -39,5 +39,8 @@ def signup(request):
                 ecommerceuser.last_login = datetime.datetime.today()
 
                 ecommerceuser.save()
+
+                #TODO: Aggiungere popup di conferma
+                return redirect('homepage')
 
     return render(request, template_name=template, context=ctx)
