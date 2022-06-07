@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Registrazione Nuovo Utente {% endblock title %}
+
+{% block content %}
+    <h1>
+        Nuovo Utente
+    </h1>
+
+    <form action="{% url 'app_utenti:costumerSignUpPage' %}" method="POST"> {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Registrati" />
+    </form>
+
+    <div>
+        {{ message }}
+    </div>
+{% endblock content %}
