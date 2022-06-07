@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ tabTitle }} {% endblock title %}
+
+{% block content %}
+    <h1>
+        {{ title }}
+    </h1>
+
+    {% if action == "signup" %}
+        <!--SIGNUP PAGE-->
+        <form action="{% url 'app_utenti:signupPage' %}" method="POST"> {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" value="Registrati" />
+        </form>
+    {% elif action == "login"%}
+        <!--LOGIN PAGE-->
+        <form action="{% url 'app_utenti:loginPage' %}" method="POST"> {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" value="Accedi" />
+        </form>
+    {% endif %}
+
+    <a href="{% url 'homepage' %}">Indietro</a>
+    
+    <!-- MESSAGE BOX FOR ERRORS-->
+    <div>
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endblock content %}
