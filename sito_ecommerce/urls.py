@@ -19,6 +19,7 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    re_path(r'^$|^/$|^home/$|^homepage/$', homepage, name='homepage')
 ]
 
 # CODICE DA ESEGUIRE ALL'AVVIO DI DJANGO
