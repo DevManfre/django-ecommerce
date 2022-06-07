@@ -1,13 +1,19 @@
+from re import A
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from hashlib import md5
 import datetime
+from django.contrib.auth import authenticate
 
 # Create your views here.
+template = "signup_login.html"
+
 def signup(request):
-    template = "signup.html"
     ctx = {
+        "action" : "signup",
+        "tabTitle" : "eGym - Registrazione",
+        "title" : "Nuovo Utente",
         "form": SignUpForm(),
         "messages": list()
     }
@@ -35,7 +41,7 @@ def signup(request):
                 ecommerceuser.first_name = first_name
                 ecommerceuser.last_name = last_name
                 ecommerceuser.email = email
-                ecommerceuser.password = md5(password.encode()).hexdigest()
+                ecommerceuser.set_password(md5(password.encode()).hexdigest())
                 ecommerceuser.last_login = datetime.datetime.today()
 
                 ecommerceuser.save()
@@ -43,4 +49,31 @@ def signup(request):
                 #TODO: Aggiungere popup di conferma
                 return redirect('homepage')
 
+    return render(request, template_name=template, context=ctx)
+
+def login(request):
+    ctx = {
+        "action" : "login",
+        "tabTitle" : "eGym - Login",
+        "title" : "Accesso",
+        "form": LogInForm(),
+        "messages": list()
+    }
+
+    if request.method == "POST":
+        form = LogInForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get("login_username")
+            password = md5(form.cleaned_data.get("signup_password").encode()).hexdigest()
+
+            user = authenticate(username=username, password=password)
+
+            #TODO: FARE IL IS_AUTHENTICATED
+
+            print(user) 
+            
+
+            
+            
     return render(request, template_name=template, context=ctx)

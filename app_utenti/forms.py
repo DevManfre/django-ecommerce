@@ -2,7 +2,6 @@ from django.forms import *
 
 from app_utenti.models import EcommerceUser
 
-
 class SignUpForm(Form):
     signup_username = CharField(
         label="Username",
@@ -36,4 +35,16 @@ class SignUpForm(Form):
         max_length=EcommerceUser.IBAN_LENGTH,
         min_length=EcommerceUser.IBAN_LENGTH,
         required=False
+    )
+
+class LogInForm(Form):
+    login_username = CharField(
+        label="Username",
+        max_length=254,
+        min_length=3,
+        required=True
+    )
+    signup_password = CharField(
+        label='Password',
+        widget=PasswordInput()
     )

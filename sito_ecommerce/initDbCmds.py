@@ -20,12 +20,13 @@ def initDatabase():
     user.set_password('admin')
     user.is_superuser = True
     user.is_staff = True
+    user.last_login = datetime.date.today()
     user.save()
 
     #Creazione Utenti Random
     users = {
         "username" : [
-            "Asdrubale",
+            "Alessio",
             "gattino00",
             "justice_",
             "fonforo",
@@ -97,7 +98,7 @@ def initDatabase():
             "frapia69!",
             "fortnite",
             "samsung",
-            "gertrude",
+            "raph00",
             "qwerty09",
             "zxcdsaqwe"
         ],
@@ -122,12 +123,13 @@ def initDatabase():
         ecommerceuser.last_name = users["last_name"][i]
         ecommerceuser.birthDate = users["birthDate"][i]
         ecommerceuser.email = users["email"][i]
-        ecommerceuser.password = md5(users["password"][i].encode()).hexdigest()
+        ecommerceuser.set_password(md5(users["password"][i].encode()).hexdigest())
         ecommerceuser.iban = users["iban"][i]
+        ecommerceuser.last_login = datetime.date.today()
 
         # DECOMMENTARE LA LINEA PER RICEVERE UNA DESCRZIONE DEI DATI CREATI NEL DB
         #print(ecommerceuser.description())     
 
         ecommerceuser.save()
 
-    print("--->DATABASE CREATO<---")
+    print("--->DATABASE CREATO<---\n")
