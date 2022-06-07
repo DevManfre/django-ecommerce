@@ -5,34 +5,39 @@ from hashlib import md5
 import datetime
 
 # Create your views here.
-def costumerSignUp(request):
-    template = "signupCostumer.html"
+def signup(request):
+    template = "signup.html"
     ctx = {
-        "form": SignUpFormCostumer(),
+        "form": SignUpForm(),
+        "messages": list()
     }
 
     if request.method == "POST":
-        form = SignUpFormCostumer(request.POST)
+        form = SignUpForm(request.POST)
 
         if form.is_valid():
-            costumer = Costumer()
+            ecommerceuser = EcommerceUser()
 
             username = form.cleaned_data.get('signup_username')
+            email = form.cleaned_data.get('signup_email')
+            
             if User.objects.filter(username=username).exists():
-                ctx["message"] = "Attenzione, username già presente!<br>"
-            else:
+                ctx["messages"].append("Attenzione, username già esistente!")
+            if User.objects.filter(email=email).exists():
+                ctx["messages"].append("Attenzione, email già esistente!")
+            
+            if(len(ctx["messages"]) == 0):
                 first_name = form.cleaned_data.get('signup_first_name')
                 last_name = form.cleaned_data.get('signup_last_name')
-                email = form.cleaned_data.get('signup_email')
                 password = form.cleaned_data.get('signup_password')
 
-                costumer.username = username
-                costumer.first_name = first_name
-                costumer.last_name = last_name
-                costumer.email = email
-                costumer.password = md5(password.encode()).hexdigest()
-                costumer.last_login = datetime.datetime.today()
+                ecommerceuser.username = username
+                ecommerceuser.first_name = first_name
+                ecommerceuser.last_name = last_name
+                ecommerceuser.email = email
+                ecommerceuser.password = md5(password.encode()).hexdigest()
+                ecommerceuser.last_login = datetime.datetime.today()
 
-                costumer.save()
+                ecommerceuser.save()
 
     return render(request, template_name=template, context=ctx)

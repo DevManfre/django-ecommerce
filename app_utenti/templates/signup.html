@@ -7,13 +7,17 @@
         Nuovo Utente
     </h1>
 
-    <form action="{% url 'app_utenti:costumerSignUpPage' %}" method="POST"> {% csrf_token %}
+    <form action="{% url 'app_utenti:signupPage' %}" method="POST"> {% csrf_token %}
         {{ form.as_p }}
 
         <input type="submit" value="Registrati" />
     </form>
 
     <div>
-        {{ message }}
+        {% for message in messages %}
+            <p>
+                {{ message }}
+            </p>
+        {% endfor %}
     </div>
 {% endblock content %}
