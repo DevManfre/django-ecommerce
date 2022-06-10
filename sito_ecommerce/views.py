@@ -3,8 +3,12 @@ from django.shortcuts import render
 
 def homepage(request):
     template = "homepage.html"
-    ctx = {
+    ctx = {}
 
-    }
+    return render(request, template_name=template, context=ctx)
+
+def welcomePage(request):
+    template = "tmpLogged.html"
+    ctx = {}
 
     return render(request, template_name=template, context=ctx)

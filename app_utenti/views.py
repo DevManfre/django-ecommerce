@@ -4,12 +4,12 @@ from .forms import *
 from .models import *
 from hashlib import md5
 import datetime
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 template = "signup_login.html"
 
-def signup(request):
+def signupPage(request):
     ctx = {
         "action" : "signup",
         "tabTitle" : "eGym - Registrazione",
@@ -51,7 +51,7 @@ def signup(request):
 
     return render(request, template_name=template, context=ctx)
 
-def login(request):
+def loginPage(request):
     ctx = {
         "action" : "login",
         "tabTitle" : "eGym - Login",
@@ -69,11 +69,8 @@ def login(request):
 
             user = authenticate(username=username, password=password)
 
-            #TODO: FARE IL IS_AUTHENTICATED
-
-            print(user) 
-            
-
-            
+            if user is not None:
+                login(request, user)
+                return redirect('welcomePage')
             
     return render(request, template_name=template, context=ctx)
