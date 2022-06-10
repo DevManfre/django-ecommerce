@@ -21,6 +21,7 @@ from .initDbCmds import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$|^/$|^home/$|^homepage/$', homepage, name='homepage'),
+    path('login/', welcomePage, name="welcomePage"),
 
     path('user/', include('app_utenti.urls')),
 ]
