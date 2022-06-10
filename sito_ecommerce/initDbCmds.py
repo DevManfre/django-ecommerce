@@ -145,7 +145,10 @@ def initDatabase():
         ecommerceuser.email = users["email"][i]
         ecommerceuser.set_password(md5(users["password"][i].encode()).hexdigest())
         ecommerceuser.iban = users["iban"][i]
-        ecommerceuser.last_login = datetime.date.today()   
+        ecommerceuser.last_login = datetime.date.today()
+
+        if ecommerceuser.iban != '':
+            ecommerceuser.isVendor = True
 
         ecommerceuser.save()
     

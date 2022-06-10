@@ -36,6 +36,10 @@ def signupPage(request):
                 first_name = form.cleaned_data.get('signup_first_name')
                 last_name = form.cleaned_data.get('signup_last_name')
                 password = form.cleaned_data.get('signup_password')
+                iban = form.cleaned_data.get('signup_iban')
+
+                if (iban != ''):
+                    ecommerceuser.isVendor = True
 
                 ecommerceuser.username = username
                 ecommerceuser.first_name = first_name
@@ -71,6 +75,12 @@ def loginPage(request):
 
             if user is not None:
                 login(request, user)
+
+                if EcommerceUser.objects.filter(username=username)[0].isVendor:
+                    #TODO: Creare Pagina per venditori
+                    #return pagina per venditori
+                    pass
+                
                 return redirect('welcomePage')
             
     return render(request, template_name=template, context=ctx)
