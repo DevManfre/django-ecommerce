@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'app_utenti'
+    'app_utenti',
+    'app_prodotti'
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,6 +99,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+IMAGES_DIR = os.path.join(STATICFILES_DIRS[0], "images")
+PRODUCTS_IMAGES_DIR = os.path.join(IMAGES_DIR, "products")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

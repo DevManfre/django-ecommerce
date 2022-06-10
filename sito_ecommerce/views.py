@@ -8,7 +8,7 @@ def homepage(request):
     return render(request, template_name=template, context=ctx)
 
 def welcomePage(request):
-    template = "tmpLogged.html"
+    template = "welcomePage.html"
     ctx = {}
 
     return render(request, template_name=template, context=ctx)
