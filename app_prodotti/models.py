@@ -1,6 +1,7 @@
 from ast import Mod
 from email.policy import default
 from django.db.models import *
+from app_utenti.models import EcommerceUser
 
 # Create your models here.
 class CommonInfo(Model):
@@ -27,7 +28,7 @@ class Product(Model):
     STRING_LENGTH = 100
     MAX_DECIMAL = 2
     MAX_DIGITS = 6
-    OTHER_BRAND_ID = OTHER_CATEGORY_ID = 0
+    OTHER_BRAND_ID = OTHER_CATEGORY_ID = DEFAULT_VENDOR = 0
 
     name = CharField(max_length=STRING_LENGTH)
     description = CharField(max_length=STRING_LENGTH*3)
@@ -35,6 +36,7 @@ class Product(Model):
     image = ImageField(default=None)
     category = ForeignKey(Category, on_delete=CASCADE, default=OTHER_CATEGORY_ID)
     brand = ForeignKey(Brand, on_delete=CASCADE, default=OTHER_BRAND_ID)
+    vendor = ForeignKey(EcommerceUser, on_delete=CASCADE, default=DEFAULT_VENDOR)
 
     def __str__(self):
         return f'{self.name}, {self.price}€'

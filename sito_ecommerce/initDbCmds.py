@@ -138,6 +138,7 @@ def initDatabase():
 
     for i in range(len(users["first_name"])):
         ecommerceuser = EcommerceUser()
+        ecommerceuser.id = i
         ecommerceuser.username = users["username"][i]
         ecommerceuser.first_name = users["first_name"][i]
         ecommerceuser.last_name = users["last_name"][i]
@@ -370,6 +371,35 @@ def initDatabase():
             Brand.objects.get(name='Nabaiji'),
             Brand.objects.get(name='Nabaiji'),
             Brand.objects.get(name='ALTRO')
+        ],
+        "vendor" : [
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
+            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
+            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
+            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
+            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
+            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
+            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
+            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
         ]
     }
 
@@ -381,6 +411,7 @@ def initDatabase():
         product.image = ImageFile(open(os.path.join(PRODUCTS_IMAGES_DIR, product.name.lower().replace(' ', '-') + '.avif'), 'rb'))
         product.category = products["category"][i]
         product.brand = products["brand"][i]
+        product.vendor = products["vendor"][i]
         
         product.save()
     
