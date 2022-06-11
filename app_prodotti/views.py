@@ -52,3 +52,20 @@ def compareProducts(request, prod1, prod2):
     }
 
     return render(request, template_name=template, context=ctx)
+
+class vendorDetailsView(DetailView):
+    model = EcommerceUser
+    template_name = 'vendorDetails.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        id = self.get_object().id
+        nScore = 0
+        totalScore = 0
+        for score in VendorScore.objects.filter(id=id):
+            nScore += 1
+            totalScore += score.value
+        context['score'] = totalScore/nScore
+
+        return context

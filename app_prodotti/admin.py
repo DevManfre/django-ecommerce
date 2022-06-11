@@ -5,4 +5,5 @@ from .models import *
 admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(Brand)
-admin.site.register(Score)
+admin.site.register(ProductScore)
+admin.site.register(VendorScore)

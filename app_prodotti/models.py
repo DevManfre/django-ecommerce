@@ -42,7 +42,7 @@ class Product(Model):
         return f'{self.name}, {self.price}€'
     
     def getScoresInformations(self):
-        scores = Score.objects.filter(product=self)
+        scores = ProductScore.objects.filter(product=self)
         scoresDetails = []
 
         for score in scores:
@@ -52,7 +52,7 @@ class Product(Model):
 
     def getTotalScore(self):
         totalScore = 0
-        scores = Score.objects.filter(product=self)
+        scores = ProductScore.objects.filter(product=self)
         nScores = len(scores)
 
         for score in scores:
@@ -63,7 +63,7 @@ class Product(Model):
     class Meta:
         verbose_name_plural = 'Prodotti'
 
-class Score(Model):
+class CommmonInfoScore(Model):
     MAX_VALUE = 10
     MIN_VALUE = 1
     TEXT_LENGTH = 300
@@ -77,11 +77,22 @@ class Score(Model):
         ]
     )
     text = CharField(max_length=TEXT_LENGTH, default='')
-    user = ForeignKey(EcommerceUser, on_delete=CASCADE)
-    product = ForeignKey(Product, on_delete=CASCADE)
+    user = ForeignKey(EcommerceUser, on_delete=CASCADE, null=True)
 
     def __str__(self):
         return f'{self.id} - {self.value}'
 
     class Meta:
-        verbose_name_plural = 'Recensioni'
+        abstract = True
+
+class ProductScore(CommmonInfoScore):
+    product = ForeignKey(Product, on_delete=CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Recensioni - Prodotti'
+
+class VendorScore(CommmonInfoScore):
+    vendor = ForeignKey(EcommerceUser, on_delete=SET_NULL, null=True, related_name="vendor")
+
+    class Meta:
+        verbose_name_plural = 'Recensioni - Venditori'

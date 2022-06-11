@@ -1,0 +1,27 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Dettagli {{ object }}
+{% endblock title %}
+
+{% block content %}
+    <div>
+        {{ object }}
+    </div>
+    <div>
+        {{ object.username }}
+    </div>
+    <div>
+        {{ object.iban }}
+    </div>
+    <div>
+        {{ object.email }}
+    </div>
+    <div>
+        PUNTEGGIO = {{ score }}
+    </div>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

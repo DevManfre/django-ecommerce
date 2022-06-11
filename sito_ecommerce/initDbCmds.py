@@ -29,7 +29,7 @@ def eraseDatabase():
         Category.objects.all().delete()
         Brand.objects.all().delete()
         Product.objects.all().delete()
-        Score.objects.all().delete()
+        ProductScore.objects.all().delete()
 
     deleteTables()
     deleteTmpImages()
@@ -380,7 +380,7 @@ def initDatabase():
 
             product.save()
 
-    def scoresCreation():
+    def productScoreCreation():
         textScores = [
             'Perfetto,tutto quello che volevo.',
             'Sono soddisfatta del mio acquisto!',
@@ -398,14 +398,38 @@ def initDatabase():
         scores = {
             'product': [product for product in Product.objects.all()]*2,
             'user': [user for user in EcommerceUser.objects.all()]*6,
-            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(100)],
+            'value': [random.randint(ProductScore.MIN_VALUE, ProductScore.MAX_VALUE) for random_int in range(100)],
             'text': [textScores[random.randint(0, len(textScores)-1)] for i in range(100)]
         }
 
         for i in range(len(scores['product'])):
-            score = Score()
+            score = ProductScore()
             score.id = i
             score.product = scores['product'][i]
+            score.user = scores['user'][i]
+            score.value = scores['value'][i]
+            score.text = scores['text'][i]
+            score.save()
+
+    def vendorScoreCreation():
+        textScores = [
+                "Pessimo ho comprato e non è mai arrivato l'oggetto e non mi hanno risarcito! Ho perso 60 euro e sono furibonda!",
+                "Io mi sono sempre trovato bene. Non capisco la gente che lascia recensioni negative. Per qualsiasi problema io comunque non ho mai avuto problemi.",
+                "Avrò fatto 200 acquisti nel giro di 5 anni e mi trovo benissimo!",
+                "Mai avuto problemi",
+                "Good service. Cool stuff, delivered."
+            ],
+        scores = {
+            'vendor': [vendor for vendor in EcommerceUser.objects.filter(isVendor=True)]*6,
+            'user': [user for user in EcommerceUser.objects.filter(isVendor=False)]*6,
+            'value': [random.randint(ProductScore.MIN_VALUE, ProductScore.MAX_VALUE) for random_int in range(100)],
+            'text': [textScores[random.randint(0, len(textScores)-1)] for i in range(100)]
+        }
+        
+        for i in range(len(scores['vendor'])):
+            score = VendorScore()
+            score.id = i
+            score.vendor = scores['vendor'][i]
             score.user = scores['user'][i]
             score.value = scores['value'][i]
             score.text = scores['text'][i]
@@ -416,6 +440,7 @@ def initDatabase():
     categoriesCreation()
     brandsCreation()
     productsCreation()
-    scoresCreation()
+    productScoreCreation()
+    vendorScoreCreation()
 
     print("--->DATABASE CREATO<---\n")

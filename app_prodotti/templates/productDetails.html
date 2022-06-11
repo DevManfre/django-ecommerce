@@ -25,6 +25,9 @@
         <b>Categoria</b>: {{ object.category }}
     </div>
     <div>
+        <b>Venditore</b>: <a href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a>
+    </div>
+    <div>
         <br><br><b>Score</b>: {{ object.getTotalScore }}
     </div>
     <img src="{{ object.image.url }}"> 

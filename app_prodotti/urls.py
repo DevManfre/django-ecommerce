@@ -8,4 +8,5 @@ urlpatterns = [
     path('productDetails/<pk>/', productDetailsView.as_view(), name='productDetails'),
     path('compare/categories/', compareCategories, name='compareCategories'),
     path('compare/products/<int:prod1>/<int:prod2>/', compareProducts, name='compareProducts'),
+    path('vendorDetails/<pk>/', vendorDetailsView.as_view(), name='vendorDetails'),
 ]
