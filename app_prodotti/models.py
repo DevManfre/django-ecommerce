@@ -3,7 +3,7 @@ from app_utenti.models import EcommerceUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
-class CommonInfo(Model):
+class CategoryBrandCommonInfo(Model):
     STRING_LENGTH = 30
 
     id = IntegerField(primary_key=True)
@@ -15,11 +15,11 @@ class CommonInfo(Model):
     class Meta:
         abstract = True
 
-class Category(CommonInfo):
+class Category(CategoryBrandCommonInfo):
     class Meta:
         verbose_name_plural = 'Categorie'
 
-class Brand(CommonInfo):
+class Brand(CategoryBrandCommonInfo):
     class Meta:
         verbose_name_plural = "Brands"
 
@@ -46,7 +46,7 @@ class Product(Model):
         scoresDetails = []
 
         for score in scores:
-            scoresDetails.append((score.value, score.user))
+            scoresDetails.append((score.value, score.user, score.text))
         
         return scoresDetails
 
@@ -66,6 +66,7 @@ class Product(Model):
 class Score(Model):
     MAX_VALUE = 10
     MIN_VALUE = 1
+    TEXT_LENGTH = 300
     
     id = IntegerField(primary_key=True)
     value = IntegerField(
@@ -75,6 +76,7 @@ class Score(Model):
             MinValueValidator(MIN_VALUE)
         ]
     )
+    text = CharField(max_length=TEXT_LENGTH, default='')
     user = ForeignKey(EcommerceUser, on_delete=CASCADE)
     product = ForeignKey(Product, on_delete=CASCADE)
 
