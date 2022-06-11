@@ -1,0 +1,35 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Dettagli Prodotto {{ object.name }}
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        Dettagli di {{ object.name }}
+    </h1>
+
+    <div>
+        <b>Nome Articolo</b>: {{ object.name }}
+    </div>
+    <div>
+        <b>Descrizione Articolo</b>: {{ object.description }}
+    </div>
+    <div>
+        <b>Prezzo</b>: {{ object.price }}
+    </div>
+    <div>
+        <b>Brand</b>: {{ object.brand }}
+    </div>
+    <div>
+        <b>Categoria</b>: {{ object.category }}
+    </div>
+    <div>
+        <br><br><b>Score</b>: {{ object.getTotalScore }}
+    </div>
+    <img src="{{ object.image.url }}"> 
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->
