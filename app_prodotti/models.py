@@ -66,7 +66,6 @@ class Product(Model):
 class CommmonInfoScore(Model):
     MAX_VALUE = 10
     MIN_VALUE = 1
-    TEXT_LENGTH = 300
     
     id = IntegerField(primary_key=True)
     value = IntegerField(
@@ -76,7 +75,6 @@ class CommmonInfoScore(Model):
             MinValueValidator(MIN_VALUE)
         ]
     )
-    text = CharField(max_length=TEXT_LENGTH, default='')
     user = ForeignKey(EcommerceUser, on_delete=CASCADE, null=True)
 
     def __str__(self):
@@ -86,7 +84,10 @@ class CommmonInfoScore(Model):
         abstract = True
 
 class ProductScore(CommmonInfoScore):
+    TEXT_LENGTH = 300
+    
     product = ForeignKey(Product, on_delete=CASCADE)
+    text = CharField(max_length=TEXT_LENGTH, default='')
 
     class Meta:
         verbose_name_plural = 'Recensioni - Prodotti'

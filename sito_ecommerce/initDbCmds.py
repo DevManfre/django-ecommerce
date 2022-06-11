@@ -424,7 +424,6 @@ def initDatabase():
             score.product = scores['vendor'][i]
             score.user = scores['user'][i]
             score.value = scores['value'][i]
-            score.text = "Recensione di esempio per un venditore."
             score.save()
 
     adminCreation()

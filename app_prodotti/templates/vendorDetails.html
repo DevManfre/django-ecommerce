@@ -22,11 +22,7 @@
     </div>
 
     {% if request.user.is_authenticated %}
-        {% for score in scores %}
-            <div style="border-style:solid;">
-                {{ score.value }} - {{ score.user }}<br>{{ score.text }}
-            </div>
-        {% endfor %}
+        <a href="">Lascia una recensione oppure modificala se già fatta</a>
     {% endif %}
 {% endblock content %}
 
