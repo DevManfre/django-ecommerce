@@ -2,6 +2,9 @@
 
 {% block navigator %}
     <ul>
+        {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'app_utenti:loginPage' %}">Accedi</a></li>
+        {% endif %}
         <li><a href="{% url 'welcomePage' %}">Home</a></li>
         <li><a href="{% url 'app_prodotti:productsList' %}">Lista Prodotti</a></li>
         <li><a href=""></a></li>

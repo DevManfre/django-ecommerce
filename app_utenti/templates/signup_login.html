@@ -8,6 +8,8 @@
     </h1>
 
     {% if action == "signup" %}
+        <a href="{% url 'app_utenti:loginPage' %}">LOGIN</a>
+
         <!--SIGNUP PAGE-->
         <form action="{% url 'app_utenti:signupPage' %}" method="POST"> {% csrf_token %}
             {{ form.as_p }}
@@ -15,6 +17,8 @@
             <input type="submit" value="Registrati" />
         </form>
     {% elif action == "login"%}
+        <a href="{% url 'app_utenti:signupPage' %}">Registrazione</a>
+
         <!--LOGIN PAGE-->
         <form action="{% url 'app_utenti:loginPage' %}" method="POST"> {% csrf_token %}
             {{ form.as_p }}
