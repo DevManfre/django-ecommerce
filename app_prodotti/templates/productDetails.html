@@ -29,17 +29,20 @@
     </div>
     <img src="{{ object.image.url }}"> 
 
-    <h2>
-        Votazioni
-    </h2>
-    <div>
-        {% for score in object.getScoresInformations %}
-            {% for info in score %}
-                {{ info }}
+    {% if request.user.is_authenticated %}
+        <h2>
+            Votazioni
+        </h2>
+        <div>
+            {% for score in object.getScoresInformations %}
+                <div style="border-style: solid;">
+                    {% for info in score %}
+                        {{ info }}<br>
+                    {% endfor %}
+                </div><br>
             {% endfor %}
-            <br>
-        {% endfor %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock content %}
 
 <!--

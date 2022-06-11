@@ -381,10 +381,25 @@ def initDatabase():
             product.save()
 
     def scoresCreation():
+        textScores = [
+            'Perfetto,tutto quello che volevo.',
+            'Sono soddisfatta del mio acquisto!',
+            'Non sono soddisfatto del mio acquisto!',
+            '''Ho fatto un acquisto che nemmeno immaginavo di aver un prodotto al top di gamma lo consiglio assolutamente altre
+            100 volte è fatto benissimo. Acquistatelo vedete che vi troverete benissimo. Buona visione''',
+            'Proprio quello che cercavo.',
+            'Ottimo per uso casalingo',
+            'Se vuoi mantenerti in forma e’ una buona alternativa se non puoi andare in palestra anche come prezzo molto conveniente',
+            'Prodotto ottimo, soddisfa a pieno le aspettative ...',
+            'Il rapporto qualita’ prezzo e secondo me ottimo, molto soddisfacente risponde perfettamente alle mie necessità.',
+            'Tutto come da indicazioni ricevute.',
+            ''
+        ]
         scores = {
             'product': [product for product in Product.objects.all()]*2,
             'user': [user for user in EcommerceUser.objects.all()]*6,
-            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(100)]
+            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(100)],
+            'text': [textScores[random.randint(0, len(textScores)-1)] for i in range(100)]
         }
 
         for i in range(len(scores['product'])):
@@ -393,6 +408,7 @@ def initDatabase():
             score.product = scores['product'][i]
             score.user = scores['user'][i]
             score.value = scores['value'][i]
+            score.text = scores['text'][i]
             score.save()
 
     adminCreation()
