@@ -4,6 +4,7 @@ import datetime
 from hashlib import md5
 import os
 from django.core.files.images import ImageFile
+import random
 
 from sito_ecommerce.settings import PRODUCTS_IMAGES_DIR
 
@@ -405,6 +406,7 @@ def initDatabase():
 
     for i in range(len(products["name"])):
         product = Product()
+        product.id = i
         product.name = products["name"][i]
         product.description = products['description'][i]
         product.price = products["price"][i]
@@ -414,5 +416,20 @@ def initDatabase():
         product.vendor = products["vendor"][i]
         
         product.save()
-    
+
+    #Creazione Punteggi
+    scores = {
+        'product' : [product for product in Product.objects.all()]*2,
+        'user' : [user for user in EcommerceUser.objects.all()]*6,
+        'value' : [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(len(products['name'])*2)]
+    }
+
+    for i in range(len(scores['product'])):
+        score = Score()
+        score.id = i
+        score.product = scores['product'][i]
+        score.user = scores['user'][i]
+        score.value = scores['value'][i]
+        score.save()
+
     print("--->DATABASE CREATO<---\n")

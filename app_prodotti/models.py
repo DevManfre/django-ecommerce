@@ -1,7 +1,6 @@
-from ast import Mod
-from email.policy import default
 from django.db.models import *
 from app_utenti.models import EcommerceUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class CommonInfo(Model):
@@ -30,6 +29,7 @@ class Product(Model):
     MAX_DIGITS = 6
     OTHER_BRAND_ID = OTHER_CATEGORY_ID = DEFAULT_VENDOR = 0
 
+    id = IntegerField(primary_key=True)
     name = CharField(max_length=STRING_LENGTH)
     description = CharField(max_length=STRING_LENGTH*3)
     price = DecimalField(decimal_places=MAX_DECIMAL, max_digits=MAX_DIGITS)
@@ -44,3 +44,23 @@ class Product(Model):
     class Meta:
         verbose_name_plural = 'Prodotti'
 
+class Score(Model):
+    MAX_VALUE = 10
+    MIN_VALUE = 1
+    
+    id = IntegerField(primary_key=True)
+    value = IntegerField(
+        default=5,
+        validators=[
+            MaxValueValidator(MAX_VALUE),
+            MinValueValidator(MIN_VALUE)
+        ]
+    )
+    user = ForeignKey(EcommerceUser, on_delete=CASCADE)
+    product = ForeignKey(Product, on_delete=CASCADE)
+
+    def __str__(self):
+        return f'{self.id} - {self.value}'
+
+    class Meta:
+        verbose_name_plural = 'Recensioni'
