@@ -18,8 +18,16 @@
         {{ object.email }}
     </div>
     <div>
-        PUNTEGGIO = {{ score }}
+        PUNTEGGIO = {{ totalScore }}
     </div>
+
+    {% if request.user.is_authenticated %}
+        {% for score in scores %}
+            <div style="border-style:solid;">
+                {{ score.value }} - {{ score.user }}<br>{{ score.text }}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}
 
 <!--

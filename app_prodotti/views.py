@@ -61,11 +61,12 @@ class vendorDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
 
         id = self.get_object().id
+        context['scores'] = VendorScore.objects.filter(id=id)
         nScore = 0
         totalScore = 0
-        for score in VendorScore.objects.filter(id=id):
+        for score in context['scores']:
             nScore += 1
             totalScore += score.value
-        context['score'] = totalScore/nScore
+        context['totalScore'] = totalScore/nScore
 
         return context
