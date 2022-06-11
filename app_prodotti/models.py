@@ -41,6 +41,15 @@ class Product(Model):
     def __str__(self):
         return f'{self.name}, {self.price}€'
     
+    def getScoresInformations(self):
+        scores = Score.objects.filter(product=self)
+        scoresDetails = []
+
+        for score in scores:
+            scoresDetails.append((score.value, score.user))
+        
+        return scoresDetails
+
     def getTotalScore(self):
         totalScore = 0
         scores = Score.objects.filter(product=self)

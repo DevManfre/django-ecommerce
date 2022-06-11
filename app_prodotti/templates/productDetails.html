@@ -28,6 +28,18 @@
         <br><br><b>Score</b>: {{ object.getTotalScore }}
     </div>
     <img src="{{ object.image.url }}"> 
+
+    <h2>
+        Votazioni
+    </h2>
+    <div>
+        {% for score in object.getScoresInformations %}
+            {% for info in score %}
+                {{ info }}
+            {% endfor %}
+            <br>
+        {% endfor %}
+    </div>
 {% endblock content %}
 
 <!--
