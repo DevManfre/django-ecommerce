@@ -5,6 +5,7 @@ from hashlib import md5
 import os
 from django.core.files.images import ImageFile
 import random
+import exrex
 
 from sito_ecommerce.settings import PRODUCTS_IMAGES_DIR
 
@@ -20,29 +21,34 @@ def eraseDatabase():
             if regex.match(file):
                 os.remove(os.path.join(PRODUCTS_IMAGES_DIR, file))
     
+    def deleteTables():
+        User.objects.all().delete()
+
+        Category.objects.all().delete()
+        Brand.objects.all().delete()
+        Product.objects.all().delete()
+        Score.objects.all().delete()
+
+    deleteTables()
     deleteTmpImages()
-
-    User.objects.all().delete()
-
-    Category.objects.all().delete()
-    Brand.objects.all().delete()
-    Product.objects.all().delete()
 
     print("--->DATABASE ELIMINATO<---")
 
 def initDatabase():
-    #Creazione Admin
-    user = User(
-        username = 'admin',
-        email = 'admin@admin.admin',
-        first_name = 'admin',
-        last_name = 'admin',
-    )
-    user.set_password('admin')
-    user.is_superuser = True
-    user.is_staff = True
-    user.last_login = datetime.date.today()
-    user.save()
+    def creazioneAdmin():
+        user = User(
+            username = 'admin',
+            email = 'admin@admin.admin',
+            first_name = 'admin',
+            last_name = 'admin',
+        )
+        user.set_password('admin')
+        user.is_superuser = True
+        user.is_staff = True
+        user.last_login = datetime.date.today()
+        user.save()
+
+    creazioneAdmin()
 
     #Creazione Utenti Random
     users = {
@@ -82,18 +88,11 @@ def initDatabase():
             "Ferrari",
             "Maia"
         ],
-        "birthDate" : [
-            datetime.date(2000,5,16),
-            datetime.date(2002,4,14),
-            datetime.date(1980,1,30),
-            datetime.date(2001,6,6),
-            datetime.date(1999,2,28),
-            datetime.date(1999,3,3),
-            datetime.date(1998,5,15),
-            datetime.date(1997,7,21),
-            datetime.date(1996,9,20),
-            datetime.date(1999,11,27)
-        ],
+        "birthDate" : [datetime.date(
+            random.randint(1950, 2004),
+            random.randint(1, 12),
+            random.randint(1, 28)
+        ) for i in range(10)],
         "email" : [
             "alessio@manfredini.it",
             "francesco@venturelli.com",
@@ -123,18 +122,7 @@ def initDatabase():
             "qwerty09",
             "zxcdsaqwe"
         ],
-        "iban" : [
-            "IT52A0300203280258515626349",
-            "",
-            "IT25X0300203280442154535952",
-            "",
-            "IT46H0300203280896418952432",
-            "",
-            "IT53Y0300203280762661629485",
-            "",
-            "IT61S0300203280467765126978",
-            "" 
-        ]
+        "iban" : [""]*5 + [exrex.getone('IT[A-Z0-9]{4}300203280[AZ0-9]{12}') for i in range(5)]
     }
 
     for i in range(len(users["first_name"])):
@@ -373,35 +361,7 @@ def initDatabase():
             Brand.objects.get(name='Nabaiji'),
             Brand.objects.get(name='ALTRO')
         ],
-        "vendor" : [
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
-            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
-            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
-            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
-            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
-            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
-            EcommerceUser.objects.get(iban='IT61S0300203280467765126978'),
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT52A0300203280258515626349'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT25X0300203280442154535952'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT46H0300203280896418952432'),
-            EcommerceUser.objects.get(iban='IT53Y0300203280762661629485'),
-        ]
+        "vendor" : [user for user in EcommerceUser.objects.filter(isVendor=True)]*6
     }
 
     for i in range(len(products["name"])):
