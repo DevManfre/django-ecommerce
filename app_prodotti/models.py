@@ -30,7 +30,7 @@ class Product(Model):
     OTHER_BRAND_ID = OTHER_CATEGORY_ID = DEFAULT_VENDOR = 0
 
     id = IntegerField(primary_key=True)
-    name = CharField(max_length=STRING_LENGTH)
+    name = CharField(max_length=STRING_LENGTH, unique=True)
     description = CharField(max_length=STRING_LENGTH*3)
     price = DecimalField(decimal_places=MAX_DECIMAL, max_digits=MAX_DIGITS)
     image = ImageField(default=None)
