@@ -384,7 +384,7 @@ def initDatabase():
         scores = {
             'product': [product for product in Product.objects.all()]*2,
             'user': [user for user in EcommerceUser.objects.all()]*6,
-            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(len(products['name'])*2)]
+            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(100)]
         }
 
         for i in range(len(scores['product'])):

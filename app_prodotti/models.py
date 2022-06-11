@@ -40,6 +40,16 @@ class Product(Model):
 
     def __str__(self):
         return f'{self.name}, {self.price}€'
+    
+    def getTotalScore(self):
+        totalScore = 0
+        scores = Score.objects.filter(product=self)
+        nScores = len(scores)
+
+        for score in scores:
+            totalScore += score.value
+        
+        return totalScore/nScores
 
     class Meta:
         verbose_name_plural = 'Prodotti'
