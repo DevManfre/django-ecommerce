@@ -1,6 +1,7 @@
 from django.db.models import *
 from app_utenti.models import EcommerceUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 class CategoryBrandCommonInfo(Model):
@@ -78,7 +79,7 @@ class CommmonInfoScore(Model):
     user = ForeignKey(EcommerceUser, on_delete=CASCADE, null=True)
 
     def __str__(self):
-        return f'{self.id} - {self.value}'
+        return f'{self.id} - {self.user}'
 
     class Meta:
         abstract = True

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.urls import reverse
 from .models import *
 from .forms import *
+from django.contrib.auth.models import User
 
 # Create your views here.
 class productsListView(ListView):
@@ -13,6 +13,25 @@ class productsListView(ListView):
 class productDetailsView(DetailView):
     model = Product
     template_name = 'productDetails.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['isReviewed'] = False
+
+        try:
+            if self.request.user.is_authenticated:
+                productId = self.get_object().id
+                userId = User.objects.get(username=self.request.user).id
+                review = ProductScore.objects.get(product_id=productId, user_id=userId)
+
+
+                if review:
+                    context['isReviewed'] = True
+        except:
+            pass
+
+        return context
 
 def compareCategories(request):
     template = 'compareProductsForm.html'
@@ -59,17 +78,29 @@ class vendorDetailsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        
+        context['isReviewed'] = False
         id = self.get_object().id
         nScore = 0
         totalScore = 0
-        for score in VendorScore.objects.filter(id=id):
+
+        for score in VendorScore.objects.filter(vendor_id=id):
             nScore += 1
             totalScore += score.value
-        context['totalScore'] = totalScore/nScore
+        try:
+            context['totalScore'] = int(totalScore/nScore)
+        except:
+            context['totalScore'] = 0
 
-        return context
+        try:
+            if self.request.user.is_authenticated:
+                vendorId = self.get_object().id
+                userId = User.objects.get(username=self.request.user).id
+                review = VendorScore.objects.filter(vendor_id=vendorId, user_id=userId)
 
-class vendorReviewForm(reviewForm):
-    model = VendorScore
-    template_name = 'vendorReviewForm.html'
+                if len(review) > 0:
+                    context['isReviewed'] = True
+        except:
+            pass
+
+        return context 

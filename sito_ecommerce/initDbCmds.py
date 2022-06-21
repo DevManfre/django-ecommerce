@@ -1,3 +1,4 @@
+from errno import ECANCELED
 import re
 from django.contrib.auth.models import User
 import datetime
@@ -421,10 +422,17 @@ def initDatabase():
         for i in range(len(scores['vendor'])):
             score = VendorScore()
             score.id = i
-            score.product = scores['vendor'][i]
+            score.vendor = scores['vendor'][i]
             score.user = scores['user'][i]
             score.value = scores['value'][i]
             score.save()
+
+        score = VendorScore()
+        score.id = 100
+        score.vendor = EcommerceUser.objects.get(id=5)
+        score.user = EcommerceUser.objects.get(username='raph')
+        score.value = 10
+        score.save()
 
     adminCreation()
     usersCreation()
