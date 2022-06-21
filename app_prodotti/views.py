@@ -128,3 +128,26 @@ def vendorReview(request, pk):
             return redirect("app_prodotti:vendorDetails", pk)
 
     return render(request, template_name=template, context=ctx)
+
+def productReview(request, pk):
+    template = 'reviewForm.html'
+    ctx = {
+        'form': productReviewForm(),
+        "message": '',
+        "product": pk
+    }
+
+    if request.method == "POST":
+        form = productReviewForm(request.POST)
+
+        if form.is_valid():
+            score = ProductScore()
+            score.value = form.cleaned_data.get('review_value')
+            score.product = Product.objects.get(id=pk)
+            score.user = EcommerceUser.objects.get(username=request.user.username)
+            
+            score.save()
+
+            return redirect("app_prodotti:productDetails", pk)
+
+    return render(request, template_name=template, context=ctx)

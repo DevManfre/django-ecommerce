@@ -34,7 +34,7 @@
 
     {% if request.user.is_authenticated %}
         {% if not isReviewed %}
-            <a href="">Lascia una recensione se ancora non lo hai fatto</a>
+            <a href="{% url 'app_prodotti:productReview' product.id %}">Lascia una recensione se ancora non lo hai fatto</a>
         {% endif %}
 
         <h2>

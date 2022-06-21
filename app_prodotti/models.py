@@ -59,7 +59,7 @@ class Product(Model):
         for score in scores:
             totalScore += score.value
         
-        return totalScore/nScores
+        return int(totalScore/nScores)
 
     class Meta:
         verbose_name_plural = 'Prodotti'
