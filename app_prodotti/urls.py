@@ -9,4 +9,5 @@ urlpatterns = [
     path('compare/categories/', compareCategories, name='compareCategories'),
     path('compare/products/<int:prod1>/<int:prod2>/', compareProducts, name='compareProducts'),
     path('vendorDetails/<pk>/', vendorDetailsView.as_view(), name='vendorDetails'),
+    path('vendorReview/<pk>/', vendorReview, name='vendorReview'),
 ]

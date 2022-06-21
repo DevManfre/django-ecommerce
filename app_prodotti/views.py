@@ -80,6 +80,7 @@ class vendorDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
         
         context['isReviewed'] = False
+        context['vendorId'] = self.get_object().id
         id = self.get_object().id
         nScore = 0
         totalScore = 0
@@ -104,3 +105,26 @@ class vendorDetailsView(DetailView):
             pass
 
         return context 
+
+def vendorReview(request, pk):
+    template = 'reviewForm.html'
+    ctx = {
+        'form': vendorReviewForm(),
+        "message": '',
+        "vendor": pk
+    }
+
+    if request.method == "POST":
+        form = vendorReviewForm(request.POST)
+
+        if form.is_valid():
+            score = VendorScore()
+            score.value = form.cleaned_data.get('review_value')
+            score.user = EcommerceUser.objects.get(username=request.user.username)
+            score.vendor = EcommerceUser.objects.get(id=pk)
+
+            score.save()
+
+            return redirect("app_prodotti:vendorDetails", pk)
+
+    return render(request, template_name=template, context=ctx)

@@ -5,7 +5,10 @@
 {% endblock title %}
 
 {% block content %}
-    CACCA
+    <form method="POST" action="{% url 'app_prodotti:vendorReview' vendor %}"> {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Vota" />
+    </form>
 {% endblock content %}
 
 <!--
