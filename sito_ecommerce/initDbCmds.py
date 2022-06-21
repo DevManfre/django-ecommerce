@@ -1,3 +1,4 @@
+from errno import ECANCELED
 import re
 from django.contrib.auth.models import User
 import datetime
@@ -29,7 +30,7 @@ def eraseDatabase():
         Category.objects.all().delete()
         Brand.objects.all().delete()
         Product.objects.all().delete()
-        Score.objects.all().delete()
+        ProductScore.objects.all().delete()
 
     deleteTables()
     deleteTmpImages()
@@ -380,7 +381,7 @@ def initDatabase():
 
             product.save()
 
-    def scoresCreation():
+    def productScoreCreation():
         textScores = [
             'Perfetto,tutto quello che volevo.',
             'Sono soddisfatta del mio acquisto!',
@@ -398,12 +399,12 @@ def initDatabase():
         scores = {
             'product': [product for product in Product.objects.all()]*2,
             'user': [user for user in EcommerceUser.objects.all()]*6,
-            'value': [random.randint(Score.MIN_VALUE, Score.MAX_VALUE) for random_int in range(100)],
+            'value': [random.randint(ProductScore.MIN_VALUE, ProductScore.MAX_VALUE) for random_int in range(100)],
             'text': [textScores[random.randint(0, len(textScores)-1)] for i in range(100)]
         }
 
         for i in range(len(scores['product'])):
-            score = Score()
+            score = ProductScore()
             score.id = i
             score.product = scores['product'][i]
             score.user = scores['user'][i]
@@ -411,11 +412,34 @@ def initDatabase():
             score.text = scores['text'][i]
             score.save()
 
+    def vendorScoreCreation():
+        scores = {
+            'vendor': [vendor for vendor in EcommerceUser.objects.filter(isVendor=True)]*6,
+            'user': [user for user in EcommerceUser.objects.filter(isVendor=False)]*6,
+            'value': [random.randint(ProductScore.MIN_VALUE, ProductScore.MAX_VALUE) for random_int in range(100)]
+        }
+
+        for i in range(len(scores['vendor'])):
+            score = VendorScore()
+            score.id = i
+            score.vendor = scores['vendor'][i]
+            score.user = scores['user'][i]
+            score.value = scores['value'][i]
+            score.save()
+
+        score = VendorScore()
+        score.id = 100
+        score.vendor = EcommerceUser.objects.get(id=5)
+        score.user = EcommerceUser.objects.get(username='raph')
+        score.value = 10
+        score.save()
+
     adminCreation()
     usersCreation()
     categoriesCreation()
     brandsCreation()
     productsCreation()
-    scoresCreation()
+    productScoreCreation()
+    vendorScoreCreation()
 
     print("--->DATABASE CREATO<---\n")

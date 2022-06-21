@@ -25,11 +25,18 @@
         <b>Categoria</b>: {{ object.category }}
     </div>
     <div>
+        <b>Venditore</b>: <a href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a>
+    </div>
+    <div>
         <br><br><b>Score</b>: {{ object.getTotalScore }}
     </div>
     <img src="{{ object.image.url }}"> 
 
     {% if request.user.is_authenticated %}
+        {% if not isReviewed %}
+            <a href="{% url 'app_prodotti:productReview' product.id %}">Lascia una recensione se ancora non lo hai fatto</a>
+        {% endif %}
+
         <h2>
             Votazioni
         </h2>

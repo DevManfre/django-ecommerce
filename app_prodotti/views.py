@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.urls import reverse
 from .models import *
 from .forms import *
+from django.contrib.auth.models import User
 
 # Create your views here.
 class productsListView(ListView):
@@ -13,6 +13,25 @@ class productsListView(ListView):
 class productDetailsView(DetailView):
     model = Product
     template_name = 'productDetails.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['isReviewed'] = False
+
+        try:
+            if self.request.user.is_authenticated:
+                productId = self.get_object().id
+                userId = User.objects.get(username=self.request.user).id
+                review = ProductScore.objects.get(product_id=productId, user_id=userId)
+
+
+                if review:
+                    context['isReviewed'] = True
+        except:
+            pass
+
+        return context
 
 def compareCategories(request):
     template = 'compareProductsForm.html'
@@ -50,5 +69,85 @@ def compareProducts(request, prod1, prod2):
             Product.objects.get(id=prod2),
         ]
     }
+
+    return render(request, template_name=template, context=ctx)
+
+class vendorDetailsView(DetailView):
+    model = EcommerceUser
+    template_name = 'vendorDetails.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['isReviewed'] = False
+        context['vendorId'] = self.get_object().id
+        id = self.get_object().id
+        nScore = 0
+        totalScore = 0
+
+        for score in VendorScore.objects.filter(vendor_id=id):
+            nScore += 1
+            totalScore += score.value
+        try:
+            context['totalScore'] = int(totalScore/nScore)
+        except:
+            context['totalScore'] = 0
+
+        try:
+            if self.request.user.is_authenticated:
+                vendorId = self.get_object().id
+                userId = User.objects.get(username=self.request.user).id
+                review = VendorScore.objects.filter(vendor_id=vendorId, user_id=userId)
+
+                if len(review) > 0:
+                    context['isReviewed'] = True
+        except:
+            pass
+
+        return context 
+
+def vendorReview(request, pk):
+    template = 'reviewForm.html'
+    ctx = {
+        'form': vendorReviewForm(),
+        "message": '',
+        "vendor": pk
+    }
+
+    if request.method == "POST":
+        form = vendorReviewForm(request.POST)
+
+        if form.is_valid():
+            score = VendorScore()
+            score.value = form.cleaned_data.get('review_value')
+            score.user = EcommerceUser.objects.get(username=request.user.username)
+            score.vendor = EcommerceUser.objects.get(id=pk)
+
+            score.save()
+
+            return redirect("app_prodotti:vendorDetails", pk)
+
+    return render(request, template_name=template, context=ctx)
+
+def productReview(request, pk):
+    template = 'reviewForm.html'
+    ctx = {
+        'form': productReviewForm(),
+        "message": '',
+        "product": pk
+    }
+
+    if request.method == "POST":
+        form = productReviewForm(request.POST)
+
+        if form.is_valid():
+            score = ProductScore()
+            score.value = form.cleaned_data.get('review_value')
+            score.product = Product.objects.get(id=pk)
+            score.user = EcommerceUser.objects.get(username=request.user.username)
+            
+            score.save()
+
+            return redirect("app_prodotti:productDetails", pk)
 
     return render(request, template_name=template, context=ctx)

@@ -1,0 +1,20 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Recensione Venditore
+{% endblock title %}
+
+{% block content %}
+    {% if vendor is not None %}
+        <form method="POST" action="{% url 'app_prodotti:vendorReview' vendor %}"> {% csrf_token %}
+    {% else %}
+        <form method="POST" action="{% url 'app_prodotti:productReview' product %}"> {% csrf_token %}
+    {% endif %}
+        {{ form.as_p }}
+        <input type="submit" value="Vota" />
+    </form>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->
