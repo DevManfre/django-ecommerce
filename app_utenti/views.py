@@ -77,10 +77,8 @@ def loginPage(request):
                 login(request, user)
 
                 if EcommerceUser.objects.filter(username=username)[0].isVendor:
-                    #TODO: Creare Pagina per venditori
-                    #return pagina per venditori
-                    pass
+                    return redirect('vendorWelcomePage')
                 
                 return redirect('welcomePage')
             
-    return render(request, template_name=template, context=ctx)
+    return render(request, template_name=template, context=ctx) 

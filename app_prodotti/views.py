@@ -4,11 +4,24 @@ from django.views.generic.detail import DetailView
 from .models import *
 from .forms import *
 from django.contrib.auth.models import User
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 class productsListView(ListView):
     model = Product
     template_name = 'productsList.html'
+
+class myProductsListView(ListView):
+    model = Product
+    template_name = 'myProductsList.html' 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['object_list'] = Product.objects.filter(vendor_id=self.request.user.id)
+
+        return context 
 
 class productDetailsView(DetailView):
     model = Product
@@ -151,3 +164,45 @@ def productReview(request, pk):
             return redirect("app_prodotti:productDetails", pk)
 
     return render(request, template_name=template, context=ctx)
+
+def productStats(request, pk):
+    template = 'productStats.html'
+    ctx = {
+        'object': Product.objects.get(id=pk)
+    }
+
+    orders = Order.objects.filter(product_id=pk)
+    totalItems = 0
+
+    ctx['totalOrders'] = len(orders)
+
+    for order in orders:
+        totalItems += order.quantity
+    
+    ctx['totalItems'] = totalItems
+    ctx['totalGain'] = totalItems*ctx['object'].price
+
+    return render(request, template_name=template, context=ctx)
+
+def deleteProduct(request, pk):
+    Product.objects.get(id=pk).delete()
+
+    return redirect('app_prodotti:myProductsList')
+
+class createProduct(CreateView):
+    model = Product
+    template_name = "createProduct.html"
+    fields = [
+        'name',
+        'description',
+        'price',
+        'category',
+        'brand',
+        'image'
+    ]
+    success_url = reverse_lazy("app_prodotti:myProductsList")
+
+    def form_valid(self, form):
+        form.instance.vendor_id = self.request.user.id
+
+        return super().form_valid(form)

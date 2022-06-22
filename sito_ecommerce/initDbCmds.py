@@ -8,7 +8,7 @@ from django.core.files.images import ImageFile
 import random
 import exrex
 
-from sito_ecommerce.settings import PRODUCTS_IMAGES_DIR
+from sito_ecommerce.settings import MEDIA_ROOT
 
 from app_utenti.models import *
 from app_prodotti.models import *
@@ -18,11 +18,11 @@ def eraseDatabase():
     def deleteTmpImages():
         regex = re.compile(
             '^[a-z]{0,3}-{0,1}[a-z]{0,1}_[a-zA-Z0-9_]{7,}\.avif$')
-        fileList = os.listdir(PRODUCTS_IMAGES_DIR)
+        fileList = os.listdir(MEDIA_ROOT)
 
         for file in fileList:
             if regex.match(file):
-                os.remove(os.path.join(PRODUCTS_IMAGES_DIR, file))
+                os.remove(os.path.join(MEDIA_ROOT, file))
 
     def deleteTables():
         User.objects.all().delete()
@@ -374,7 +374,7 @@ def initDatabase():
             product.description = products['description'][i]
             product.price = products["price"][i]
             product.image = ImageFile(open(os.path.join(
-                PRODUCTS_IMAGES_DIR, product.name.lower().replace(' ', '-') + '.avif'), 'rb'))
+                MEDIA_ROOT, product.name.lower().replace(' ', '-') + '.avif'), 'rb'))
             product.category = products["category"][i]
             product.brand = products["brand"][i]
             product.vendor = products["vendor"][i]
@@ -434,6 +434,21 @@ def initDatabase():
         score.value = 10
         score.save()
 
+    def ordersCreation():
+        orders = {
+            'product': [product for product in Product.objects.all()]*3,
+            'user': [user for user in EcommerceUser.objects.filter(isVendor=False)]*80
+        }
+
+        for i in range(len(orders['product'])):
+            order = Order()
+            order.user = orders['user'][i]
+            order.product = orders['product'][i]
+            order.quantity = random.randint(1, 6)
+
+            order.save()
+
+
     adminCreation()
     usersCreation()
     categoriesCreation()
@@ -441,5 +456,6 @@ def initDatabase():
     productsCreation()
     productScoreCreation()
     vendorScoreCreation()
+    ordersCreation()
 
     print("--->DATABASE CREATO<---\n")
