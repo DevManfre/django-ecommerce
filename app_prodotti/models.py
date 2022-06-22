@@ -1,7 +1,7 @@
 from django.db.models import *
 from app_utenti.models import EcommerceUser
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class CategoryBrandCommonInfo(Model):
@@ -98,3 +98,15 @@ class VendorScore(CommmonInfoScore):
 
     class Meta:
         verbose_name_plural = 'Recensioni - Venditori'
+
+class Order(Model):
+    user = ForeignKey(EcommerceUser, on_delete=CASCADE)
+    product = ForeignKey(Product, on_delete=CASCADE)
+    quantity = IntegerField(default=1)
+    date = DateField(default=timezone.now())
+
+    def __str__(self):
+        return f'{self.user} - {self.quantity} * {self.product}'
+    
+    class Meta:
+        verbose_name_plural = 'Ordini'

@@ -23,7 +23,8 @@ urlpatterns = [
     
     re_path(r'^$|^/$|^home/$|^homepage/$', homepage, name='homepage'),
     
-    path('login/', welcomePage, name="welcomePage"),
+    path('login/user/', welcomePage, name="welcomePage"),
+    path('login/vendor/', vendorWelcomePage, name="vendorWelcomePage"),
 
     path('user/', include('app_utenti.urls')),
     path ('product/', include('app_prodotti.urls')),
@@ -31,4 +32,4 @@ urlpatterns = [
 
 # CODICE DA ESEGUIRE ALL'AVVIO DI DJANGO
 eraseDatabase()
-initDatabase()
+initDatabase() 

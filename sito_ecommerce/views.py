@@ -11,3 +11,9 @@ def welcomePage(request):
     ctx = {}
 
     return render(request, template_name=template, context=ctx)
+
+def vendorWelcomePage(request):
+    template = "vendorWelcomePage.html"
+    ctx = {}
+
+    return render(request, template_name=template, context=ctx)

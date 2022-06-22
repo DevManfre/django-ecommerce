@@ -11,4 +11,8 @@ urlpatterns = [
     path('vendorDetails/<pk>/', vendorDetailsView.as_view(), name='vendorDetails'),
     path('vendorReview/<pk>/', vendorReview, name='vendorReview'),
     path('productReview/<pk>/', productReview, name='productReview'),
+    path('productsList/vendor/', myProductsListView.as_view(), name='myProductsList'),
+    path('productStats/<pk>/', productStats, name='productStats'),
+    path('deleteProduct/<pk>/', deleteProduct, name='deleteProduct'),
+    path('createProduct/', createProduct.as_view(), name='createProduct'),
 ]

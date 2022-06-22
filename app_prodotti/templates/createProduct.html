@@ -1,0 +1,17 @@
+{% extends 'vendorEcommerce.html' %}
+
+{% block title %}
+    Crea prodotto
+{% endblock title %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Crea" />
+    </form>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->
