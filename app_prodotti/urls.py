@@ -15,4 +15,5 @@ urlpatterns = [
     path('productStats/<pk>/', productStats, name='productStats'),
     path('deleteProduct/<pk>/', deleteProduct, name='deleteProduct'),
     path('createProduct/', createProduct.as_view(), name='createProduct'),
+    path('searchResults/', searchResults, name="searchResults")
 ]
