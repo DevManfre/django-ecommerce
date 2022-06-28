@@ -1,0 +1,61 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Risultati Ricerca
+{% endblock title %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/priceRange.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <form method="POST" action="{% url 'app_prodotti:searchResults' %}">{% csrf_token %}
+        <select name="category">
+            <option value="All" />
+            {% for category in categories %}
+                <option name="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+        <input type='text' / name="text">
+        
+        <div class="price-input">
+            <div class="field">
+              <span>Min</span>
+              <input type="number" class="input-min" value="{{ minValue }}" name="minPrice">
+            </div>
+            <div class="field">
+              <span>Max</span>
+              <input type="number" class="input-max" value="{{ maxValue }}" name="maxPrice">
+            </div>
+          </div>
+          <div class="slider">
+            <div class="progress"></div>
+          </div>
+          <div class="range-input">
+            <input type="range" class="range-min" min="0" max="{{ maxPrice }}" value="{{ minValue }}" step="1">
+            <input type="range" class="range-max" min="0" max="{{ maxPrice }}" value="{{ maxValue }}" step="1">
+          </div>
+        
+        <input type='submit' value='Cerca' />
+    </form>
+
+    {% if searched %}
+        <h1>
+            Risultati per "{{ searchedText }}"
+        </h1>
+
+        {% for item in items %}
+            <ul>
+                <a href="{% url 'app_prodotti:productDetails' item.id %}">{{ item }}</a>
+            </ul>
+        {% endfor %}
+    {% endif %}
+    
+    <script type="text/javascript" src="{% static 'js/priceRange.js' %}"></script>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

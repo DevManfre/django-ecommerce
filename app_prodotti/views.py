@@ -206,3 +206,30 @@ class createProduct(CreateView):
         form.instance.vendor_id = self.request.user.id
 
         return super().form_valid(form)
+
+def searchResults(request):
+    template = 'searchResults.html'
+    ctx = {
+        "searched": False,
+        "categories": Category.objects.all(),
+        "maxPrice": Product.objects.first().price
+    }
+
+    for product in Product.objects.all():
+        if ctx['maxPrice'] < product.price:
+            ctx['maxPrice'] = int(product.price)
+    
+    ctx['minValue'] = int(ctx['maxPrice']/4)
+    ctx['maxValue'] = int(ctx['maxPrice']/4*3)
+
+    if request.method == "POST":
+        ctx['searched'] = True
+        ctx['searchedText'] = request.POST['text']
+        ctx['items'] = Product.objects.filter(name__contains=request.POST['text'])
+        
+        if request.POST['category'] != 'All':
+            ctx['items'] = ctx['items'].filter(category_id=Category.objects.get(name=request.POST['category']).id)
+
+        ctx['items'] = ctx['items'].filter(price__range=(request.POST['minPrice'], request.POST['maxPrice']))
+    
+    return render(request, template_name=template, context=ctx)

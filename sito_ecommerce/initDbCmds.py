@@ -8,7 +8,7 @@ from django.core.files.images import ImageFile
 import random
 import exrex
 
-from sito_ecommerce.settings import MEDIA_ROOT
+from sito_ecommerce.settings import STATICFILES_IMAGES
 
 from app_utenti.models import *
 from app_prodotti.models import *
@@ -18,11 +18,11 @@ def eraseDatabase():
     def deleteTmpImages():
         regex = re.compile(
             '^[a-z]{0,3}-{0,1}[a-z]{0,1}_[a-zA-Z0-9_]{7,}\.avif$')
-        fileList = os.listdir(MEDIA_ROOT)
+        fileList = os.listdir(STATICFILES_IMAGES)
 
         for file in fileList:
             if regex.match(file):
-                os.remove(os.path.join(MEDIA_ROOT, file))
+                os.remove(os.path.join(STATICFILES_IMAGES, file))
 
     def deleteTables():
         User.objects.all().delete()
@@ -374,7 +374,7 @@ def initDatabase():
             product.description = products['description'][i]
             product.price = products["price"][i]
             product.image = ImageFile(open(os.path.join(
-                MEDIA_ROOT, product.name.lower().replace(' ', '-') + '.avif'), 'rb'))
+                STATICFILES_IMAGES, product.name.lower().replace(' ', '-') + '.avif'), 'rb'))
             product.category = products["category"][i]
             product.brand = products["brand"][i]
             product.vendor = products["vendor"][i]
