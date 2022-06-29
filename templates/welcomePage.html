@@ -1,0 +1,40 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Benvenuto
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        Benvenuto {{ request.user }}
+    </h1>
+
+    <!-- Recommendation System -->
+    {% if request.user.is_authenticated %}
+        {% if suggestedProductBySameCategory|length > 0 %}
+            <h1>
+                Suggeriti in base alla categoria più acquistato...
+            </h1>
+            <ul>
+                {% for product in suggestedProductBySameCategory %}
+                    <li><a href="{% url 'app_prodotti:productDetails' product.id %}">{{ product }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if suggestedProductBySameBrand|length > 0 %}
+            <h1>
+                Suggeriti in base al brand più acquistato...
+            </h1>
+            <ul>
+                {% for product in suggestedProductBySameBrand %}
+                    <li><a href="{% url 'app_prodotti:productDetails' product.id %}">{{ product }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

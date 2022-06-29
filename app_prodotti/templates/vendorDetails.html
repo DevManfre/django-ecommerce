@@ -1,0 +1,33 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Dettagli {{ object }}
+{% endblock title %}
+
+{% block content %}
+    <div>
+        {{ object }}
+    </div>
+    <div>
+        {{ object.username }}
+    </div>
+    <div>
+        {{ object.iban }}
+    </div>
+    <div>
+        {{ object.email }}
+    </div>
+    <div>
+        PUNTEGGIO = {{ totalScore }}
+    </div>
+
+    {% if request.user.is_authenticated %}
+        {% if not isReviewed %}
+            <a href="{% url 'app_prodotti:vendorReview' vendorId %}">Lascia una recensione se ancora non lo hai fatto</a>
+        {% endif %}
+    {% endif %}
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

@@ -1,0 +1,21 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Lista Prodotti
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        Lista Prodotti
+    </h1>
+
+    <ul>
+        {% for p in object_list %}
+            <li><a href="{% url 'app_prodotti:productDetails' p.id %}">{{ p }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

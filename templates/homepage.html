@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    eGym
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        Benvenuto su eGym!
+    </h1>
+    <h2>
+        Scegli un opzione:
+    </h2>
+    <ul>
+        <li><a href="{% url 'app_utenti:signupPage' %}">Iscrizione</a></li>
+        <li><a href="{% url 'app_utenti:loginPage' %}">Accesso</a></li>
+        <li><a href="{% url 'welcomePage' %}">Accedi più tardi...</a></li>
+    </ul>
+{% endblock content %}
+
+
+<!--
+    TODO: Cura grafica Homepage
+-->

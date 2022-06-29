@@ -1,0 +1,20 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Confronta Prodotti
+{% endblock title %}
+
+{% block content %}
+    <form method="POST" action={% url 'app_prodotti:compareCategories' %}> {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Paragona" />
+    </form>
+
+    <div>
+        {{ message }}
+    </div>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

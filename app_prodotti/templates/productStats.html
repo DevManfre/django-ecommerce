@@ -1,0 +1,17 @@
+{% extends 'vendorEcommerce.html' %}
+
+{% block title %}
+    Statistiche Prodotto {{ object.name }}
+{% endblock title %}
+
+{% block content %}
+    <a href="{% url 'app_prodotti:deleteProduct' object.id %}">Elimina Articolo</a>
+
+    <div>Ordini totali -> {{ totalOrders }}</div>
+    <div>Oggetti totali venduti -> {{ totalItems }}</div>
+    <div>Guadagno totale -> {{ totalGain }}</div>
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

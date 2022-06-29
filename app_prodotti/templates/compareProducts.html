@@ -1,0 +1,34 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Confronta Prodotti
+{% endblock title %}
+
+{% block content %}
+    {% for prod in prods %}
+        <div style="border-style:solid;">
+            <div>
+                {{ prod.name }}
+            </div>
+            <div>
+                {{ prod.description }}
+            </div>
+            <div>
+                {{ prod.price }}
+            </div>
+            <div>
+                <img src="{{ prod.image.url }}"> 
+            </div>
+            <div>
+                {{ prod.brand }}
+            </div>
+            <div>
+                {{ prod.GetTotalScore }}
+            </div>
+        </div> <br>
+    {% endfor %}
+{% endblock content %}
+
+<!--
+    TODO: Cura grafica 
+-->

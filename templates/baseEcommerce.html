@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block navigator %}
+    <ul>
+        {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'app_utenti:loginPage' %}">Accedi</a></li>
+        {% endif %}
+        <li><a href="{% url 'welcomePage' %}">Home</a></li>
+        <li><a href="{% url 'app_prodotti:productsList' %}">Lista Prodotti</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'app_prodotti:compareCategories' %}">Confronta</a></li>
+        {% endif %}
+        <li>
+            <a href="{% url 'app_prodotti:searchResults' %}">Cerca</a>
+        </li>
+    </ul>
+{% endblock navigator %}
