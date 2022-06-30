@@ -4,21 +4,44 @@
     eGym
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <h1>
-        Benvenuto su eGym!
-    </h1>
-    <h2>
-        Scegli un opzione:
-    </h2>
-    <ul>
-        <li><a href="{% url 'app_utenti:signupPage' %}">Iscrizione</a></li>
-        <li><a href="{% url 'app_utenti:loginPage' %}">Accesso</a></li>
-        <li><a href="{% url 'welcomePage' %}">Accedi più tardi...</a></li>
-    </ul>
+    <div class="container">
+        <h1 class="text-fill">eGym</h1>
+        <h2>
+            Benvenuto su eGym!
+        </h2>
+        <h3>
+            Scegli un opzione:
+        </h3>
+        <a href="{% url 'app_utenti:signupPage' %}">
+            <button class="button-link">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"> Registrati </span>
+            </button>
+        </a>
+        <a href="{% url 'app_utenti:loginPage' %}">
+            <button class="button-link">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"> Accedi </span>
+            </button>
+        </a>
+        <a href="{% url 'welcomePage' %}">
+            <button class="button-link">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"> Visita il sito </span>
+            </button>
+        </a>
+    </div>
 {% endblock content %}
-
-
-<!--
-    TODO: Cura grafica Homepage
--->
