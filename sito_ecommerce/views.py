@@ -1,8 +1,6 @@
-from math import prod
-from unicodedata import category
 from django.shortcuts import render
 from app_prodotti.models import *
-from django.db.models import Count
+from django.http import Http404
 
 def homepage(request):
     template = "homepage.html"
@@ -94,5 +92,14 @@ def welcomePage(request):
 def vendorWelcomePage(request):
     template = "vendorWelcomePage.html"
     ctx = {}
+    isVendor = False
 
-    return render(request, template_name=template, context=ctx)
+    try:
+        isVendor = EcommerceUser.objects.get(id=request.user.id).isVendor
+    except:
+        pass
+
+    if not request.user.is_authenticated or not isVendor:
+        raise Http404
+    else:
+        return render(request, template_name=template, context=ctx)
