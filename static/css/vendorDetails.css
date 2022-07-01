@@ -1,0 +1,11 @@
+div.iban,
+div.email,
+div.score {
+    padding: 40px;
+    text-align: center;
+    font-size: 60px;
+}
+
+div.email {
+    font-size: 30px;
+}

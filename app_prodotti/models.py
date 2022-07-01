@@ -47,7 +47,7 @@ class Product(Model):
         scoresDetails = []
 
         for score in scores:
-            scoresDetails.append((score.value, score.user, score.text))
+            scoresDetails.append((score))
         
         return scoresDetails
 

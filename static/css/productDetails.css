@@ -1,0 +1,109 @@
+.productDescription {
+    margin-bottom: 30px;
+}
+
+img {
+    padding: 20px;
+    float: left;
+}
+
+span.productPrice {
+    font-size: 50px;
+    align-self: center;
+    transition: 0.5s;
+}
+
+span.brand {
+    transition: 0.5s;
+    font-size: 30px;
+}
+
+span.productPrice:hover {
+    color: rgb(63, 63, 228);
+    transition: 0.5s;
+}
+
+span.brand:hover {
+    color: rgb(63, 63, 228);
+    transition: 0.5s;
+}
+
+div.productBrand {
+    padding-top: 20px;
+    font-size: 30px;
+}
+
+a.vendor {
+    transition: 0.5;
+}
+
+a.vendor:hover {
+    transition: 0.5;
+    font-size: 30px;
+    color: rgb(63, 63, 228);
+}
+
+.good-review-score {
+    background-color: #66CC33;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+}
+
+/*Review Card*/
+section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    place-items: center;
+    grid-gap: 2rem;
+}
+
+.card {
+    width: 350px;
+    height: 500px;
+    background: rgb(255, 255, 255);
+    border-radius: 0.4em;
+    box-shadow: 0.3em 0.3em 0.7em #00000015;
+    transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: rgb(250, 250, 250) 0.2em solid;
+}
+
+.card:hover {
+    border: #006fff 0.2em solid;
+}
+
+.card div {
+    margin: 20px;
+    color: black;
+    text-align: center;
+}
+
+.scoreValue {
+    font-size: 40px;
+}
+
+@media only screen and (max-width: 1500px) {
+    img {
+        float: none;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 2500px) {
+    section {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 2000px) {
+    section {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

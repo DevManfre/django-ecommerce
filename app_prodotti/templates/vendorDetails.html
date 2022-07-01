@@ -4,21 +4,25 @@
     Dettagli {{ object }}
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/vendorDetails.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <div>
-        {{ object }}
-    </div>
-    <div>
-        {{ object.username }}
-    </div>
-    <div>
+    <h1 class="title">
+        {{ object }}, aka {{ object.username }}
+    </h1>
+        
+    <div class="iban">
         {{ object.iban }}
     </div>
-    <div>
+    <div class="email">
         {{ object.email }}
     </div>
-    <div>
-        PUNTEGGIO = {{ totalScore }}
+    <div class="score">
+        {{ totalScore }}&#9733;
     </div>
 
     {% if request.user.is_authenticated %}

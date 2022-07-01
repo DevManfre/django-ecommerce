@@ -7,7 +7,6 @@
 {% block head %}
     {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/welcomePage.css' %}">
     <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
 {% endblock head %}
 
@@ -75,9 +74,9 @@
                 </section>
             {% endif %}
         {% else %}
-            <h2>
+            <h1 class="title subtitle">
                 Zero ordini effettuati, non posso consigliarti niente.
-            </h2>
+            </h1>
         {% endif %}
     {% endif %}
 {% endblock content %}

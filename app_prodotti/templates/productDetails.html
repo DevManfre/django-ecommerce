@@ -4,43 +4,37 @@
     Dettagli Prodotto {{ object.name }}
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <h1>
+    <h1 class="title">
         Dettagli di {{ object.name }}
     </h1>
 
-    <div>
-        <b>Nome Articolo</b>: {{ object.name }}
+    <div class="details">
+        <img src="{{ object.image.url }}"> 
+
+        <div class="productDescription"> <br>{{ object.description }} </div> 
+        <span class="productPrice">{{ object.price }}€</span>
+        <div class="productBrand">Prodotto da <span class="brand">{{ object.brand }}</span></div>
+        <br><br>{{ object.category }}<br><br>
+        <div>Venduto da <a class="vendor" href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a></div>
+        &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
-    <div>
-        <b>Descrizione Articolo</b>: {{ object.description }}
-    </div>
-    <div>
-        <b>Prezzo</b>: {{ object.price }}
-    </div>
-    <div>
-        <b>Brand</b>: {{ object.brand }}
-    </div>
-    <div>
-        <b>Categoria</b>: {{ object.category }}
-    </div>
-    <div>
-        <b>Venditore</b>: <a href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a>
-    </div>
-    <div>
-        <br><br><b>Score</b>: {{ object.getTotalScore }}
-    </div>
-    <img src="{{ object.image.url }}"> 
 
     {% if request.user.is_authenticated %}
         {% if not isReviewed %}
-            <a href="{% url 'app_prodotti:productReview' product.id %}">Lascia una recensione se ancora non lo hai fatto</a>
+            <a href="{% url 'app_prodotti:productReview' product.id %}"><h1 class="title subtitle review">Lascia una recensione se ancora non lo hai fatto</h1></a>
         {% endif %}
 
-        <h2>
+        <h1 class="title">
             Votazioni
-        </h2>
-        <div>
+        </h1>
+        {% comment %} <div>
             {% for score in object.getScoresInformations %}
                 <div style="border-style: solid;">
                     {% for info in score %}
@@ -48,7 +42,15 @@
                     {% endfor %}
                 </div><br>
             {% endfor %}
-        </div>
+        </div> {% endcomment %}
+        <section>
+            {% for score in object.getScoresInformations %}
+                <div class="card">
+                    <div class="scoreValue">{{ score.value }}&#9733;</div><br>
+                    <div class="scoreUser">{{ score.text }}</div><br>
+                </div>
+            {% endfor %}
+        </section>
     {% endif %}
 {% endblock content %}
 
