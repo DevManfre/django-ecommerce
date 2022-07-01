@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app_prodotti.models import *
 from django.http import Http404
+from django.contrib.auth import logout
 
 def homepage(request):
     template = "homepage.html"
@@ -80,12 +81,17 @@ def welcomePage(request):
         return products
 
     template = "welcomePage.html"
-    ctx = {}
+    ctx = {
+        'zeroOrders': False
+    }
 
     if request.user.is_authenticated:
         # Recommendation System
-        ctx['suggestedProductBySameCategory'] = suggestedProductBySameCategory()
-        ctx['suggestedProductBySameBrand'] = suggestedProductBySameBrand()
+        try:
+            ctx['suggestedProductBySameCategory'] = suggestedProductBySameCategory()
+            ctx['suggestedProductBySameBrand'] = suggestedProductBySameBrand()
+        except:
+            ctx['zeroOrders'] = True
 
     return render(request, template_name=template, context=ctx)
 
@@ -103,3 +109,7 @@ def vendorWelcomePage(request):
         raise Http404
     else:
         return render(request, template_name=template, context=ctx)
+
+def logoutView(request):
+    logout(request)
+    return redirect('homepage')

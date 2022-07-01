@@ -1,0 +1,98 @@
+* {
+    text-align: center;
+}
+
+body{
+    color: red;
+}
+
+h1 {
+    font-size: 50px;
+    padding: 10px;
+}
+
+/*Bottone Login*/
+.btn {
+    position: relative;
+    font-size: 17px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1em 2.5em;
+    display: inline-block;
+    border-radius: 6em;
+    transition: all .2s;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    color: black;
+    background-color: white;
+    margin-bottom: 30px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+
+.btn::after {
+    background-color: #fff;
+}
+
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
+
+.btn-back {
+    position: relative;
+    bottom: -200px;
+    margin-bottom: 30px;
+}
+
+/*Input*/
+.form-input {
+    line-height: 28px;
+    border: 2px solid transparent;
+    border-bottom-color: #DDFDFE;
+    padding: .2rem 0;
+    outline: none;
+    background-color: transparent;
+    color: #DDFDFE;
+    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    margin: 10px;
+}
+
+.form-input:focus,
+input:hover {
+    outline: none;
+    padding: .2rem 1rem;
+    border-radius: 1rem;
+    border-color: #DDFDFE;
+}
+
+.form-input::placeholder {
+    color: #DDFDFE;
+}
+
+.form-input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+}

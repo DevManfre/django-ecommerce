@@ -4,47 +4,53 @@ from app_utenti.models import EcommerceUser
 
 class SignUpForm(Form):
     signup_username = CharField(
-        label="Username",
+        label="",
         max_length=100,
         min_length=3,
-        required=True
+        required=True,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Username'})
     )
     signup_first_name = CharField(
-        label="Nome",
+        label="",
         max_length=100,
         min_length=3,
-        required=True
+        required=True,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Nome'})
     )
     signup_last_name = CharField(
-        label="Cognome",
+        label="",
         max_length=100,
         min_length=3,
-        required=True
+        required=True,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Cognome'})
     )
     signup_email = EmailField(
-        label="Email",
+        label="",
         max_length=254,
-        required=True
+        required=True,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Email'})
     )
     signup_password = CharField(
-        label='Password',
-        widget=PasswordInput()
+        label='',
+        widget=PasswordInput(attrs={'class': "form-input", 'placeholder': 'Password'})
     )
     signup_iban = CharField(
-        label="Iban (se si vuole anche vendere)",
+        label="",
         max_length=EcommerceUser.IBAN_LENGTH,
         min_length=EcommerceUser.IBAN_LENGTH,
-        required=False
+        required=False,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Iban per essere venditore'})
     )
 
 class LogInForm(Form):
     login_username = CharField(
-        label="Username",
+        label='',
         max_length=254,
         min_length=3,
-        required=True
+        required=True,
+        widget=TextInput(attrs={'class': "form-input", 'placeholder': 'Username'})
     )
     signup_password = CharField(
-        label='Password',
-        widget=PasswordInput()
+        label='',
+        widget=PasswordInput(attrs={'class': "form-input", 'placeholder': 'Password'})
     )
