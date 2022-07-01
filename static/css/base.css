@@ -19,12 +19,32 @@ body {
     height: 100vh;
 }
 
+h1.title {
+    text-align: center;
+    padding: 20px;
+    font-size: 40px;
+}
+
+h1.subtitle {
+    margin-top: 40px;
+}
+
+span.titleHover {
+    font-size: 40px;
+    transition: 0.5s;
+}
+
+span.titleHover:hover {
+    color: rgb(63, 63, 228);
+    transition: 0.5s;
+}
+
 /*Navigator*/
 :root {
     /*   color variables */
     --clr-primary: blue;
     --clr-primary-hover: #0e62cf;
-    --clr-primary-dark: #0e62cf;;
+    --clr-primary-dark: #0e62cf;
     --clr-gray100: #f0f7f8;
     --clr-gray200: #cfd8dc;
 
@@ -46,6 +66,8 @@ nav {
     background-color: #282936;
     position: fixed;
     width: 100%;
+    min-width: 1000px;
+    z-index: 1000;
 }
 
 .nav-list li.title{

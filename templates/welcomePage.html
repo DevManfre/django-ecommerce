@@ -4,34 +4,75 @@
     Benvenuto
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/welcomePage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <h1>
-        Benvenuto {{ request.user }}
+    <h1 class="title">
+        Benvenuto <span class="titleHover">{{ request.user }}</span>
     </h1>
 
     <!-- Recommendation System -->
     {% if request.user.is_authenticated %}
         {% if not zeroOrders %}
             {% if suggestedProductBySameCategory|length > 0 %}
-                <h1>
+                <h1 class="title subtitle">
                     Suggeriti in base alla categoria più acquistato...
                 </h1>
-                <ul>
+
+                <section class="slider">
                     {% for product in suggestedProductBySameCategory %}
-                        <li><a href="{% url 'app_prodotti:productDetails' product.id %}">{{ product }}</a></li>
+                        <div class="card">
+                            <div class="card-content">
+                                <img src="{{ product.image.url }}" alt="" class="card-img">
+                                <h1 class="card-title">{{ product.name }}</h1>
+                                <div class="card-body">
+                                    <div class="card-star">
+                                        <span class="rating-value">{{ product.getTotalScore }}</span>
+                                        <span class="star">&#9733;</span>
+                                    </div>
+                                <p class="card-price"> {{ product.price}}€</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'app_prodotti:productDetails' product.id %}">
+                                    <button class="btn btn-success">Guarda</button>
+                                </a>
+                                </div>
+                            </div>
+                        </div>  
                     {% endfor %}
-                </ul>
+                </section>
             {% endif %}
 
             {% if suggestedProductBySameBrand|length > 0 %}
-                <h1>
+                <h1 class="title subtitle">
                     Suggeriti in base al brand più acquistato...
                 </h1>
-                <ul>
+
+                <section class="slider">
                     {% for product in suggestedProductBySameBrand %}
-                        <li><a href="{% url 'app_prodotti:productDetails' product.id %}">{{ product }}</a></li>
+                        <div class="card">
+                            <div class="card-content">
+                                <img src="{{ product.image.url }}" alt="" class="card-img">
+                                <h1 class="card-title">{{ product.name }}</h1>
+                                <div class="card-body">
+                                    <div class="card-star">
+                                        <span class="rating-value">{{ product.getTotalScore }}</span>
+                                        <span class="star">&#9733;</span>
+                                    </div>
+                                <p class="card-price"> {{ product.price}}€</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-success">Guarda</button>
+                                </div>
+                            </div>
+                        </div>  
                     {% endfor %}
-                </ul>
+                </section>
             {% endif %}
         {% else %}
             <h2>
