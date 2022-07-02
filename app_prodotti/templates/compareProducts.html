@@ -4,31 +4,24 @@
     Confronta Prodotti
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
+    <link rel="stylesheet" href="{% static 'css/compareProducts.css' %}">
+{% endblock head %}
+
 {% block content %}
-    {% for prod in prods %}
-        <div style="border-style:solid;">
-            <div>
-                {{ prod.name }}
-            </div>
-            <div>
-                {{ prod.description }}
-            </div>
-            <div>
-                {{ prod.price }}
-            </div>
-            <div>
-                <img src="{{ prod.image.url }}"> 
-            </div>
-            <div>
-                {{ prod.brand }}
-            </div>
-            <div>
-                {{ prod.GetTotalScore }}
-            </div>
-        </div> <br>
+    {% for object in prods %}
+        <div class="details">
+            <img src="{{ object.image.url }}"> 
+    
+            <div class="productDescription"> <br>{{ object.description }} </div> 
+            <span class="productPrice">{{ object.price }}€</span>
+            <div class="productBrand">Prodotto da <span class="brand">{{ object.brand }}</span></div>
+            <br><br>{{ object.category }}<br><br>
+            <div>Venduto da <a class="vendor" href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a></div>
+            &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
     {% endfor %}
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

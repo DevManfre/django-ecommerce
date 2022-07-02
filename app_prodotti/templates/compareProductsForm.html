@@ -4,17 +4,28 @@
     Confronta Prodotti
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/compareProducts.css' %}">
+{% endblock head %}
+
 {% block content %}
     <form method="POST" action={% url 'app_prodotti:compareCategories' %}> {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Paragona" />
+        {% comment %} <input type="submit" value="Paragona" /> {% endcomment %}
+        <button class="button-link" type="submit">
+            <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+            </span>
+            <span class="button-text"> Paragona </span>
+        </button>
     </form>
 
-    <div>
-        {{ message }}
-    </div>
+    {% if error %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endif %}
+    
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

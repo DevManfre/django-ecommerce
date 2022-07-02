@@ -1,0 +1,14 @@
+form {
+    width: auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+form select {
+    margin: 40px;
+}
+form select,
+form select option {
+    color: black;
+}

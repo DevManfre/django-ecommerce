@@ -50,7 +50,8 @@ def compareCategories(request):
     template = 'compareProductsForm.html'
     ctx = {
         'form': compareProductsForm(),
-        "message": ''
+        "message": '',
+        'error': False
     }
 
     if request.method == "POST":
@@ -61,13 +62,15 @@ def compareCategories(request):
             prod2 = form.cleaned_data.get('compare_product2')
 
             if prod1 == prod2:
-                ctx['message'] = 'Non si possono paragonare due prodotti uguali.'
+                ctx['error'] = True
+                ctx['message'] = 'Non si possono paragonare due prodotti uguali'
                 
             prod1 = Product.objects.get(id=prod1)
             prod2 = Product.objects.get(id=prod2)
 
             if prod1.category != prod2.category:
-                ctx['message'] = 'Non si possono paragonare due prodotti di categorie diverse.'
+                ctx['error'] = True
+                ctx['message'] = 'Non si possono paragonare due prodotti di categorie diverse'
             
             if ctx['message'] == '':
                 return redirect("app_prodotti:compareProducts", prod1.id, prod2.id)

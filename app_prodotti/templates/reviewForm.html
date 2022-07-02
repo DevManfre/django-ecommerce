@@ -2,7 +2,13 @@
 
 {% block title %}
     Recensione Venditore
-{% endblock title %}
+{% endblock title %}ù
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/review.css' %}">
+{% endblock head %}
 
 {% block content %}
     {% if vendor is not None %}
@@ -11,7 +17,12 @@
         <form method="POST" action="{% url 'app_prodotti:productReview' product %}"> {% csrf_token %}
     {% endif %}
         {{ form.as_p }}
-        <input type="submit" value="Vota" />
+        <button class="button-link">
+            <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+            </span>
+            <span class="button-text"> Vota </span>
+        </button>
     </form>
 {% endblock content %}
 

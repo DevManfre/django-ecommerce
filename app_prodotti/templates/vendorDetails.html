@@ -27,7 +27,11 @@
 
     {% if request.user.is_authenticated %}
         {% if not isReviewed %}
-            <a href="{% url 'app_prodotti:vendorReview' vendorId %}">Lascia una recensione se ancora non lo hai fatto</a>
+            <a href="{% url 'app_prodotti:vendorReview' vendorId %}">
+                <div class="review-link">
+                    Lascia una recensione se ancora non lo hai fatto
+                </div>
+            </a>
         {% endif %}
     {% endif %}
 {% endblock content %}

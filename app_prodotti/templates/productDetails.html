@@ -8,6 +8,7 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
+    <link rel="stylesheet" href="{% static 'css/compareProducts.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -28,21 +29,17 @@
 
     {% if request.user.is_authenticated %}
         {% if not isReviewed %}
-            <a href="{% url 'app_prodotti:productReview' product.id %}"><h1 class="title subtitle review">Lascia una recensione se ancora non lo hai fatto</h1></a>
+            <a href="{% url 'app_prodotti:productReview' product.id %}">
+                <div class="review-link">
+                    Lascia una recensione se ancora non lo hai fatto
+                </div>
+            </a>
+            <br><br><br><br><br><br>
         {% endif %}
 
         <h1 class="title">
             Votazioni
         </h1>
-        {% comment %} <div>
-            {% for score in object.getScoresInformations %}
-                <div style="border-style: solid;">
-                    {% for info in score %}
-                        {{ info }}<br>
-                    {% endfor %}
-                </div><br>
-            {% endfor %}
-        </div> {% endcomment %}
         <section>
             {% for score in object.getScoresInformations %}
                 <div class="card">
