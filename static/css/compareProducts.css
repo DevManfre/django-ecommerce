@@ -1,0 +1,45 @@
+form {
+    width: 700px;
+    text-align: center;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+form input,
+form select,
+form select option {
+    margin: 30px;
+    color: black;
+    font-size: 40px;
+}
+
+form select {
+    border-radius: 10px;
+    width: 600px;
+}
+
+div.message {
+   background-color: rgb(180, 29, 29); 
+   font-size: 25px;
+   position: absolute;
+   top: 500px;
+   left: 50%;
+   transform: translate(-50%);
+   text-align: center;
+   padding: 40px;
+   text-transform: uppercase;
+   border-radius: 60px;
+}
+
+img {
+    overflow: hidden;
+    border-radius: 70px;
+}
+
+.details {
+    border: solid 3px white;
+    margin: 40px;
+    border-radius: 70px;
+}

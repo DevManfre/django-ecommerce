@@ -18,7 +18,12 @@ class EcommerceUser(User):
             PASSWORD -> {self.password}
             IBAN -> {self.iban}
         '''
-    
+
+    def isSeller(self):
+        if self.iban == '' or self.iban == None:
+            return False
+        return True
+
     class Meta:
         verbose_name_plural = 'Utenti'
 

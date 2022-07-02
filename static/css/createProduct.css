@@ -1,0 +1,16 @@
+form {
+    text-align: center;
+}
+
+form input,
+form select,
+form select option {
+    color: black;
+}
+
+form input,
+form select {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 50px;
+}

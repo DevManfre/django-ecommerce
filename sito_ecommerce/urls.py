@@ -25,6 +25,7 @@ urlpatterns = [
     
     path('login/user/', welcomePage, name="welcomePage"),
     path('login/vendor/', vendorWelcomePage, name="vendorWelcomePage"),
+    path('logout/', logoutView, name="logout"),
 
     path('user/', include('app_utenti.urls')),
     path ('product/', include('app_prodotti.urls')),

@@ -31,7 +31,7 @@ class Product(Model):
     OTHER_BRAND_ID = OTHER_CATEGORY_ID = DEFAULT_VENDOR = 0
 
     id = IntegerField(primary_key=True)
-    name = CharField(max_length=STRING_LENGTH, unique=True)
+    name = CharField(max_length=STRING_LENGTH)
     description = CharField(max_length=STRING_LENGTH*3)
     price = DecimalField(decimal_places=MAX_DECIMAL, max_digits=MAX_DIGITS)
     image = ImageField(default=None)
@@ -47,7 +47,7 @@ class Product(Model):
         scoresDetails = []
 
         for score in scores:
-            scoresDetails.append((score.value, score.user, score.text))
+            scoresDetails.append((score))
         
         return scoresDetails
 
@@ -59,7 +59,11 @@ class Product(Model):
         for score in scores:
             totalScore += score.value
         
-        return int(totalScore/nScores)
+        try:
+            return int(totalScore/nScores)
+        except:
+            #Non esistono score per questo prodotto
+            return 0
 
     class Meta:
         verbose_name_plural = 'Prodotti'

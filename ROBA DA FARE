@@ -1,3 +1,5 @@
+Unit Testing Django: Testare almeno 1 funzione di codice applicativo ed una vista utente con uso di test client
+
 I punti facoltativi sono:
 presenza del meccanismo di “carrello”, gli utenti registrati come acquirenti possono aggiungere prodotti al carrello, confermare acquisto di tutto il carrello o di una parte di esso. Il checkout prevede pagamento tramite bonifico. Il venditore riceve una notifica rispetto al nuovo acquisto e può confermare pagamento e spedizione effettuata. L’acquirente riceve una notifica di spedizione effettuata e può confermare la ricezione del prodotto.
 presenza di una cronologia di ordini (in stile amazon) che permetta all’acquirente di visualizzare tutti i prodotti da lui precedentemente comprati.

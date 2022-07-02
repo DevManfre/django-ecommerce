@@ -2,37 +2,59 @@
 
 {% block title %} {{ tabTitle }} {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/signup_login.css' %}">
+{% endblock head %}
+
 {% block content %}
     <h1>
         {{ title }}
     </h1>
 
     {% if action == "signup" %}
-        <a href="{% url 'app_utenti:loginPage' %}">LOGIN</a>
+        <a href="{% url 'app_utenti:loginPage' %}">
+            <button class="btn">Login</button>
+        </a>
 
         <!--SIGNUP PAGE-->
         <form action="{% url 'app_utenti:signupPage' %}" method="POST"> {% csrf_token %}
             {{ form.as_p }}
 
-            <input type="submit" value="Registrati" />
+            <button class="button-link" type="submit">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"> Registrati </span>
+            </button>
         </form>
     {% elif action == "login"%}
-        <a href="{% url 'app_utenti:signupPage' %}">Registrazione</a>
+        <a href="{% url 'app_utenti:signupPage' %}">
+            <button class="btn">Registrazione</button>
+        </a>
 
         <!--LOGIN PAGE-->
         <form action="{% url 'app_utenti:loginPage' %}" method="POST"> {% csrf_token %}
             {{ form.as_p }}
 
-            <input type="submit" value="Accedi" />
+            <button class="button-link" type="submit">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"> Login </span>
+            </button>
         </form>
     {% endif %}
 
-    <a href="{% url 'homepage' %}">Indietro</a>
+    <a href="{% url 'homepage' %}">
+        <button class="btn btn-back">Indietro</button>
+    </a>
     
     <!-- MESSAGE BOX FOR ERRORS-->
     <div>
         {% for message in messages %}
-            <p>
+            <p class="message">
                 {{ message }}
             </p>
         {% endfor %}

@@ -4,18 +4,39 @@
     Lista Prodotti
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <h1>
+    <h1 class="title">
         Lista Prodotti
     </h1>
 
     <ul>
-        {% for p in object_list %}
-            <li><a href="{% url 'app_prodotti:productDetails' p.id %}">{{ p }}</a></li>
-        {% endfor %}
+        <section class="slider">
+            {% for product in object_list %}
+                <div class="card">
+                    <div class="card-content">
+                        <img src="{{ product.image.url }}" alt="" class="card-img">
+                        <h1 class="card-title">{{ product.name }}</h1>
+                        <div class="card-body">
+                            <div class="card-star">
+                                <span class="rating-value">{{ product.getTotalScore }}</span>
+                                <span class="star">&#9733;</span>
+                            </div>
+                            <p class="card-price"> {{ product.price}}€</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'app_prodotti:productDetails' product.id %}">
+                                <button class="btn btn-success">Guarda</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>  
+            {% endfor %}
+        </section>
     </ul>
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

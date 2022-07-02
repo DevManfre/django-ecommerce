@@ -1,3 +1,4 @@
+from cProfile import label
 from tkinter.tix import Tree
 from django.forms import *
 from .models import *
@@ -10,7 +11,11 @@ class compareProductsForm(Form):
 
 class vendorReviewForm(Form):
     CHOICE_LIST = [(i,i) for i in range(1,11)]
-    review_value = ChoiceField(label="Punteggio ", required=True,choices=CHOICE_LIST)
+    review_value = ChoiceField(
+        label="Punteggio ",
+        required=True,
+        choices=CHOICE_LIST
+    )
 
 class productReviewForm(vendorReviewForm):
-    pass
+    review_text = Textarea()

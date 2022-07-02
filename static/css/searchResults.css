@@ -1,0 +1,26 @@
+select,
+input,
+select option {
+    color: black;
+}
+
+select,
+input {
+    padding: 20px;
+    border-radius: 60px;
+}
+
+div.center {
+    position: relative;
+    width: 707px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+div.btn {
+    text-align: center;
+}
+
+section.slider {
+    background-color: transparent;
+}
