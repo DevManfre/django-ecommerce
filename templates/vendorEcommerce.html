@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
 {% block navigator %}
-    <ul>
+    {% comment %} <ul>
         <li><a href="{% url 'vendorWelcomePage' %}">Home</a></li>
         <li><a href="{% url 'app_prodotti:myProductsList' %}">Miei Prodotti</a></li>
-    </ul>
+    </ul> {% endcomment %}
+    <nav>
+        <ul class="nav-list">
+            <li class="nav-item title">eGym</li>
+
+            <li class="nav-item"><a href="{% url 'vendorWelcomePage' %}">Home</a></li>
+
+            <li class="nav-item"><a href="{% url 'app_prodotti:myProductsList' %}">Lista Prodotti</a></li>
+
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}">
+                        <button class="btn-primary">Logout</button>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+      </nav>
 {% endblock navigator %}
-
-
-<!--
-    TODO: Cura grafica 
--->

@@ -4,14 +4,44 @@
     Statistiche Prodotto {{ object.name }}
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
+    <link rel="stylesheet" href="{% static 'css/compareProducts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prodStats.css' %}">
+{% endblock head %}
+
 {% block content %}
-    <a href="{% url 'app_prodotti:deleteProduct' object.id %}">Elimina Articolo</a>
+<div class="details">
+    <img src="{{ object.image.url }}"> 
 
-    <div>Ordini totali -> {{ totalOrders }}</div>
-    <div>Oggetti totali venduti -> {{ totalItems }}</div>
-    <div>Guadagno totale -> {{ totalGain }}</div>
+    <div class="productDescription"> <br>{{ object.description }} </div> 
+    <span class="productPrice">{{ object.price }}€</span>
+    <div class="productBrand">Prodotto da <span class="brand">{{ object.brand }}</span></div>
+    <br><br>{{ object.category }}<br><br>
+    <div>Venduto da <a class="vendor" href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a></div>
+    &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+
+    <div class="stat">Ordini Totali -> <span class="info">{{ totalOrders }}</span></div>
+    <div class="stat">Oggetti Totali venduti -> <span class="info">{{ totalItems }}</span></div>
+    <div class="stat">Guadagno Totale -> <span class="info">{{ totalGain }}</span></div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="delete-container">
+        <a href="{% url 'app_prodotti:deleteProduct' object.id %}">
+            <button class="noselect">
+                <span class="text">Elimina</span>
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
+                    </svg>
+                </span>
+            </button>
+        </a>
+    </div>
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

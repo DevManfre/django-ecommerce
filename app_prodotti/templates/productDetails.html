@@ -24,7 +24,7 @@
         <div class="productBrand">Prodotto da <span class="brand">{{ object.brand }}</span></div>
         <br><br>{{ object.category }}<br><br>
         <div>Venduto da <a class="vendor" href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a></div>
-        &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br>
+        &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
 
     {% if request.user.is_authenticated %}
@@ -50,7 +50,3 @@
         </section>
     {% endif %}
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

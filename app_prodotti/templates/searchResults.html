@@ -1,33 +1,37 @@
 {% extends 'baseEcommerce.html' %}
 
 {% block title %}
-    Risultati Ricerca
+    Ricerca
 {% endblock title %}
 
 {% block head %}
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/priceRange.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/searchResults.css' %}">
 {% endblock head %}
 
 {% block content %}
     <form method="POST" action="{% url 'app_prodotti:searchResults' %}">{% csrf_token %}
-        <select name="category">
-            <option value="All" />
-            {% for category in categories %}
-                <option name="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </select>
-        <input type='text' / name="text">
+        <div class="center">
+            <select name="category">
+                <option value="All">Tutte le Categorie</option>
+                {% for category in categories %}
+                    <option name="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <input type='text' / name="text">
+    </div>
         
         <div class="price-input">
             <div class="field">
-              <span>Min</span>
-              <input type="number" class="input-min" value="{{ minValue }}" name="minPrice">
+              {% comment %} <span>Min</span> {% endcomment %}
+              <input type="number" class="input-min input" value="{{ minValue }}" name="minPrice">
             </div>
             <div class="field">
-              <span>Max</span>
-              <input type="number" class="input-max" value="{{ maxValue }}" name="maxPrice">
+              {% comment %} <span>Max</span> {% endcomment %}
+              <input type="number" class="input-max input" value="{{ maxValue }}" name="maxPrice">
             </div>
           </div>
           <div class="slider">
@@ -37,25 +41,56 @@
             <input type="range" class="range-min" min="0" max="{{ maxPrice }}" value="{{ minValue }}" step="1">
             <input type="range" class="range-max" min="0" max="{{ maxPrice }}" value="{{ maxValue }}" step="1">
           </div>
-        
-        <input type='submit' value='Cerca' />
+
+          <br>
+          <br>
+        <div class="btn">
+          <button class="button-link">
+            <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+            </span>
+            <span class="button-text"> Cerca </span>
+        </button>
+    </div>
     </form>
 
+    <br>
+    <br>
+    <br>
+
     {% if searched %}
-        <h1>
+        <h1 class="title">
             Risultati per "{{ searchedText }}"
         </h1>
 
-        {% for item in items %}
+       {% comment %}  {% for item in items %}
             <ul>
                 <a href="{% url 'app_prodotti:productDetails' item.id %}">{{ item }}</a>
             </ul>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
+        <section class="slider">
+            {% for product in items %}
+                <div class="card">
+                    <div class="card-content">
+                        <img src="{{ product.image.url }}" alt="" class="card-img">
+                        <h1 class="card-title">{{ product.name }}</h1>
+                        <div class="card-body">
+                            <div class="card-star">
+                                <span class="rating-value">{{ product.getTotalScore }}</span>
+                                <span class="star">&#9733;</span>
+                            </div>
+                            <p class="card-price"> {{ product.price}}€</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'app_prodotti:productDetails' product.id %}">
+                                <button class="btn btn-success">Guarda</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>  
+            {% endfor %}
+        </section>
     {% endif %}
     
     <script type="text/javascript" src="{% static 'js/priceRange.js' %}"></script>
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->

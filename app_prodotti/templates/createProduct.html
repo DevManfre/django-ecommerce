@@ -4,14 +4,21 @@
     Crea prodotto
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/createProduct.css' %}">
+{% endblock head %}
+
 {% block content %}
     <form method="POST" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" value="Crea" />
+        <button class="button-link">
+            <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+            </span>
+            <span class="button-text"> Aggiungi </span>
+        </button>
     </form>
 {% endblock content %}
-
-<!--
-    TODO: Cura grafica 
--->
