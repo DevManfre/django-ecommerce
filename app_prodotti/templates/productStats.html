@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="details">
-    <img src="{{ object.image.url }}"> 
+    <img src="{{ object.image.url }}" onerror="this.onerror=null; this.src='{% static object.image.url %}'"> 
 
     <div class="productDescription"> <br>{{ object.description }} </div> 
     <span class="productPrice">{{ object.price }}€</span>
