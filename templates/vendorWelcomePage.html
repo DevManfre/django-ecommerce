@@ -4,8 +4,38 @@
     Benvenuto
 {% endblock title %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/vendorWelcomePage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+{% endblock head %}
+
 {% block content %}
     <h1 class="title">
         Benvenuto venditore {{ request.user }}
     </h1>
+
+    {% if orders|length > 0 %}
+        <section class="slider">
+            {% for order in orders %}
+            <form method="POST" action="{% url 'vendorWelcomePage' %}">{% csrf_token %}
+                <input type="number" value="{{ order.id }}" name="orderId" />
+                <div class="order">
+                    <div>Ordine di {{ order.user }}</div>
+                    <div>con totale di {{ order.total }}</div>
+
+                    <br>
+
+                    <button class="button-link">
+                        <span class="circle" aria-hidden="true">
+                            <span class="icon arrow"></span>
+                        </span>
+                        <span class="button-text"> Conferma </span>
+                    </button>
+                </div>
+            </form>
+            {% endfor %}
+        </section>
+    {% endif %}
 {% endblock content %}

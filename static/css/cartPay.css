@@ -1,0 +1,9 @@
+span {
+    transition: 0.5;
+    font-size: 40px;
+}
+
+span:hover {
+    transition: 0.5;
+    color: blue;
+}

@@ -1,0 +1,16 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Pagamento
+{% endblock title %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/cartPay.css' %}">
+{% endblock head %}
+
+{% block content %}
+<h1 class="title">Effettuare un bonifico di <span>{{ totalPrice }}</span> al seguente iban:</h1>
+<h1 class="title"><span>{{ iban }}</span></h1>
+{% endblock content %}
