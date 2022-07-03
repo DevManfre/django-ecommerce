@@ -82,7 +82,8 @@ def welcomePage(request):
 
     template = "welcomePage.html"
     ctx = {
-        'zeroOrders': False
+        'zeroOrders': False,
+        'orders': None
     }
 
     if request.user.is_authenticated:
@@ -92,13 +93,43 @@ def welcomePage(request):
             ctx['suggestedProductBySameBrand'] = suggestedProductBySameBrand()
         except:
             ctx['zeroOrders'] = True
+        
+        try:
+            ctx['orders'] = Order.objects.filter(user_id=request.user.id, order_type=2)
+
+            for order in ctx['orders']:
+                order.order_type = 3
+                order.save()
+        except:
+            pass
 
     return render(request, template_name=template, context=ctx)
 
 def vendorWelcomePage(request):
     template = "vendorWelcomePage.html"
-    ctx = {}
+    ctx = {
+        'orders': None
+    }
     isVendor = False
+
+    if request.method == "POST":
+        order = Order.objects.get(id=request.POST['orderId'])
+        order.order_type = 2
+
+        order.save()
+
+    try:
+        ctx['orders'] = Order.objects.raw(
+            f"""SELECT *
+            FROM app_prodotti_order
+            INNER JOIN app_prodotti_product ON (app_prodotti_order.product_id = app_prodotti_product.id)
+            WHERE app_prodotti_product.vendor_id='{request.user.id}' AND app_prodotti_order.order_type=1"""
+        )
+
+        for order in ctx['orders']:
+            order.total = order.quantity * order.product.price
+    except:
+        pass
 
     try:
         isVendor = EcommerceUser.objects.get(id=request.user.id).isVendor

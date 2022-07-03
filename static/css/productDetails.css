@@ -51,6 +51,12 @@ a.vendor:hover {
     margin-right: 5px;
 }
 
+form input {
+    border-radius: 20px;
+    text-align: center;
+    color: red;
+}
+
 /*Review Card*/
 section {
     display: grid;

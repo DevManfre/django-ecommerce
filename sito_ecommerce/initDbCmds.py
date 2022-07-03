@@ -453,6 +453,7 @@ def initDatabase():
             order.product = orders['product'][i]
             order.quantity = random.randint(1, 6)
             order.date = gen_datetime()
+            order.order_type = 3
 
             order.save()
 

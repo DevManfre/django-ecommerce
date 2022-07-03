@@ -16,5 +16,8 @@ urlpatterns = [
     path('deleteProduct/<pk>/', deleteProduct, name='deleteProduct'),
     path('createProduct/', createProduct.as_view(), name='createProduct'),
     path('searchResults/', searchResults, name="searchResults"),
-    path('chronology/', chronology, name="chronology")
+    path('chronology/', chronology, name="chronology"),
+    path('addToCart/<pk>/', addToCart, name="addToCart"),
+    path('cart/', cart, name="cart"),
+    path('cart/pay/<pk>/', cartPay, name="cartPay"),
 ]

@@ -1,0 +1,36 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Cartello
+{% endblock title %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+{% endblock head %}
+
+{% block content %}
+<section class="slider">
+    {% for order in orders %}
+    <div class="card">
+        <div class="card-content">
+            <img src="{{ order.product.image.url }}" alt="" class="card-img">
+            <h1 class="card-title">{{ order.product.name }}</h1>
+            <div class="card-body">
+                <div class="card-star">
+                    <span class="rating-value">{{ order.quantity }}</span>
+                </div>
+                <p class="card-price"> {{ order.product.price }}€</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'app_prodotti:cartPay' order.id %}">
+                    <button class="btn btn-success">Compra</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+    
+{% endblock content %}
