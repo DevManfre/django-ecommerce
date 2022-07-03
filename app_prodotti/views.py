@@ -6,6 +6,7 @@ from .forms import *
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from django.utils import timezone
 
 # Create your views here.
 class productsListView(ListView):
@@ -174,7 +175,7 @@ def productStats(request, pk):
         'object': Product.objects.get(id=pk)
     }
 
-    orders = Order.objects.filter(product_id=pk)
+    orders = Order.objects.filter(product_id=pk, order_type=2)
     totalItems = 0
 
     ctx['totalOrders'] = len(orders)
@@ -235,4 +236,57 @@ def searchResults(request):
 
         ctx['items'] = ctx['items'].filter(price__range=(request.POST['minPrice'], request.POST['maxPrice']))
     
+    return render(request, template_name=template, context=ctx)
+
+def chronology(request):
+    template = 'chronology.html'
+    ctx = {
+        'orders': Order.objects.filter(user_id=request.user.id, order_type=2).order_by('-date').select_related('product')
+    }
+    
+    return render(request, template_name=template, context=ctx)
+
+def addToCart(request, pk):
+    try:
+        quantity = int(request.POST['quantity'])
+    except:
+        return redirect('app_prodotti:productDetails', pk)
+
+    if quantity > 0:
+        order = Order(
+            user = EcommerceUser.objects.get(id=request.user.id),
+            product = Product.objects.get(id=pk),
+            quantity = quantity,
+            date = timezone.now(),
+            order_type = 0
+        )
+
+        order.save()
+
+    return redirect('app_prodotti:productDetails', pk)
+
+def cart(request):
+    template = 'cart.html'
+    ctx = {
+        'orders': Order.objects.filter(user_id=request.user.id, order_type=0)
+    }
+
+    
+    return render(request, template_name=template, context=ctx)
+
+def cartPay(request, pk):
+    template = 'cartPay.html'
+    ctx = {
+        'orders': Order.objects.filter(user_id=request.user.id, order_type=0),
+        'totalPrice': 0,
+        'iban': ''
+    }
+
+    order = Order.objects.get(id=pk)
+    order.order_type = 1
+    order.save()
+
+    ctx['totalPrice'] = order.product.price * order.quantity
+    ctx['iban'] = order.product.vendor.iban
+
     return render(request, template_name=template, context=ctx)

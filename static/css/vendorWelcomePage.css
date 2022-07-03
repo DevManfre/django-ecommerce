@@ -1,0 +1,21 @@
+div.order {
+    border: solid 1px white;
+    border-radius: 50px;
+    width: 450px;
+}
+
+div.order {
+    text-align: center;
+}
+
+div.order div{
+    padding: 20px;
+}
+
+div.order button {
+    padding-bottom: 20px;
+}
+
+input {
+    display: none;
+}

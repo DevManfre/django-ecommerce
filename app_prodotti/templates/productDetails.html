@@ -24,10 +24,33 @@
         <div class="productBrand">Prodotto da <span class="brand">{{ object.brand }}</span></div>
         <br><br>{{ object.category }}<br><br>
         <div>Venduto da <a class="vendor" href="{% url 'app_prodotti:vendorDetails' object.vendor.id %}">{{ object.vendor }}</a></div>
-        &#9733;{{ object.getTotalScore }}<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        &#9733;{{ object.getTotalScore }}
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
 
     {% if request.user.is_authenticated %}
+        <form action="{% url 'app_prodotti:addToCart' object.id %}" method="POST">{% csrf_token %}
+            <input type="number" required='True' value='1' name="quantity" />
+        
+            <br>
+            <br>
+
+            <button class="button-link">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text"><i class="fa-solid fa-cart-arrow-down"></i></span>
+        </button>
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
         {% if not isReviewed %}
             <a href="{% url 'app_prodotti:productReview' product.id %}">
                 <div class="review-link">

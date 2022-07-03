@@ -104,13 +104,30 @@ class VendorScore(CommmonInfoScore):
         verbose_name_plural = 'Recensioni - Venditori'
 
 class Order(Model):
+    MAX_VALUE = 3
+    MIN_VALUE = 0
+
+    # 0 = nel carrello
+    # 1 = ordinato
+    # 2 = ordinato e pagato
+    # 3 = ordinato, pagato e notificato
+
+    DEFAULT_NOTIFICATION = 0
+
     user = ForeignKey(EcommerceUser, on_delete=CASCADE)
     product = ForeignKey(Product, on_delete=CASCADE)
     quantity = IntegerField(default=1)
-    date = DateField(default=timezone.now())
+    date = DateField(null=True)
+    order_type = IntegerField(
+        default=MIN_VALUE,
+        validators=[
+            MaxValueValidator(MAX_VALUE),
+            MinValueValidator(MIN_VALUE)
+        ]
+    )
 
     def __str__(self):
-        return f'{self.user} - {self.quantity} * {self.product}'
+        return f'{self.product}'
     
     class Meta:
         verbose_name_plural = 'Ordini'

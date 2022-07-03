@@ -8,6 +8,8 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendorWelcomePage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcomePage.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -17,6 +19,19 @@
 
     <!-- Recommendation System -->
     {% if request.user.is_authenticated %}
+        {% if orders|length > 0 %}
+            <h1 class="title subtitle"> <i class="fa-solid fa-bell"></i> Ordini Spediti</h1>
+            <section class="slider">
+                {% for order in orders %}
+                    <div class="order">
+                        <br>
+                        <i class="fa-regular fa-bell"></i>
+                        <div>Ordine di {{ order.quantity }} <br/><b><span class="product">{{ order.product.name }}</span></b><br>spedito.</div>
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}    
+
         {% if not zeroOrders %}
             {% if suggestedProductBySameCategory|length > 0 %}
                 <h1 class="title subtitle">
