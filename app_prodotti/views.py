@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.utils import timezone
+import shutil
+import os
+from pathlib import Path
 
 # Create your views here.
 class productsListView(ListView):
@@ -19,6 +22,29 @@ class myProductsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        source_dir = Path(__file__).resolve().parent.parent
+        dest_dir = Path(__file__).resolve().parent.parent
+        dest_dir = os.path.join(dest_dir, 'static')
+
+        print(dest_dir)
+        dirFiles = os.listdir(source_dir)
+        dirFiles.remove('.git')
+        dirFiles.remove('.gitignore')
+        dirFiles.remove('app_prodotti')
+        dirFiles.remove('app_utenti')
+        dirFiles.remove('db.sqlite3')
+        dirFiles.remove('LICENSE')
+        dirFiles.remove('manage.py')
+        dirFiles.remove('Pipfile')
+        dirFiles.remove('Pipfile.lock')
+        dirFiles.remove('README.md')
+        dirFiles.remove('sito_ecommerce')
+        dirFiles.remove('static')
+        dirFiles.remove('templates')
+        
+        for img in dirFiles:
+            shutil.move(f"{source_dir}/{img}", f"{dest_dir}/{img}")
 
         context['object_list'] = Product.objects.filter(vendor_id=self.request.user.id)
 

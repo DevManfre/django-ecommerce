@@ -7,8 +7,8 @@
 {% block head %}
     {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
     <link rel="stylesheet" href="{% static 'css/compareProducts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productDetails.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -17,7 +17,7 @@
     </h1>
 
     <div class="details">
-        <img src="{{ object.image.url }}"> 
+        <img src="{{ object.image.url }}" onerror="this.onerror=null; this.src='{% static product.image.url %}'"> 
 
         <div class="productDescription"> <br>{{ object.description }} </div> 
         <span class="productPrice">{{ object.price }}€</span>
