@@ -6,23 +6,25 @@
             <li class="nav-item title">eGym</li>
 
             {% if not request.user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'app_utenti:loginPage' %}">Accedi</a></li>
+                <li class="nav-item"><a href="{% url 'app_utenti:loginPage' %}"><i class="fa-solid fa-arrow-right-to-bracket"></i> Accedi</a></li>
             {% endif %}
 
-            <li class="nav-item"><a href="{% url 'welcomePage' %}">Home</a></li>
+            <li class="nav-item"><a href="{% url 'welcomePage' %}"><i class="fa-solid fa-house"></i> Home</a></li>
 
-            <li class="nav-item"><a href="{% url 'app_prodotti:productsList' %}">Lista Prodotti</a></li>
+            <li class="nav-item"><a href="{% url 'app_prodotti:productsList' %}"><i class="fa-solid fa-bars-staggered"></i> Lista Prodotti</a></li>
 
             {% if request.user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'app_prodotti:compareCategories' %}">Confronta</a></li>
+                <li class="nav-item"><a href="{% url 'app_prodotti:compareCategories' %}"><i class="fa-solid fa-code-compare"></i> Confronta</a></li>
             {% endif %}
 
-            <li class="nav-item"><a href="{% url 'app_prodotti:searchResults' %}">Cerca</a></li>
+            <li class="nav-item"><a href="{% url 'app_prodotti:searchResults' %}"><i class="fa-solid fa-magnifying-glass"></i> Cerca</a></li>
 
             {% if request.user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'app_prodotti:chronology' %}"><i class="fa-solid fa-timeline"></i> Cronologia</a></li>
+                
                 <li class="nav-item">
                     <a href="{% url 'logout' %}">
-                        <button class="btn-primary">Logout</button>
+                        <button class="btn-primary"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                     </a>
                 </li>
             {% endif %}

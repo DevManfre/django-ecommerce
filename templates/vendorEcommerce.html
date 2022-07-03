@@ -9,14 +9,14 @@
         <ul class="nav-list">
             <li class="nav-item title">eGym</li>
 
-            <li class="nav-item"><a href="{% url 'vendorWelcomePage' %}">Home</a></li>
+            <li class="nav-item"><a href="{% url 'vendorWelcomePage' %}"><i class="fa-solid fa-house"></i> Home</a></li>
 
-            <li class="nav-item"><a href="{% url 'app_prodotti:myProductsList' %}">Lista Prodotti</a></li>
+            <li class="nav-item"><a href="{% url 'app_prodotti:myProductsList' %}"><i class="fa-solid fa-bars-staggered"></i> Lista Prodotti</a></li>
 
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a href="{% url 'logout' %}">
-                        <button class="btn-primary">Logout</button>
+                        <button class="btn-primary"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                     </a>
                 </li>
             {% endif %}

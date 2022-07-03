@@ -434,6 +434,13 @@ def initDatabase():
         score.value = 10
         score.save()
 
+    def gen_datetime(min_year=2000, max_year=datetime.datetime.now().year):
+        # generate a datetime in format yyyy-mm-dd hh:mm:ss.000000
+        start = datetime.datetime(min_year, 1, 1, 00, 00, 00)
+        years = max_year - min_year + 1
+        end = start + datetime.timedelta(days=365 * years)
+        return start + (end - start) * random.random()
+
     def ordersCreation():
         orders = {
             'product': [product for product in Product.objects.all()]*3,
@@ -445,9 +452,9 @@ def initDatabase():
             order.user = orders['user'][i]
             order.product = orders['product'][i]
             order.quantity = random.randint(1, 6)
+            order.date = gen_datetime()
 
             order.save()
-
 
     adminCreation()
     usersCreation()

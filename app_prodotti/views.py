@@ -236,3 +236,11 @@ def searchResults(request):
         ctx['items'] = ctx['items'].filter(price__range=(request.POST['minPrice'], request.POST['maxPrice']))
     
     return render(request, template_name=template, context=ctx)
+
+def chronology(request):
+    template = 'chronology.html'
+    ctx = {
+        'orders': Order.objects.filter(user_id=request.user.id).order_by('-date').select_related('product'),
+    }
+    
+    return render(request, template_name=template, context=ctx)

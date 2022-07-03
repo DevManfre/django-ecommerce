@@ -11,6 +11,7 @@
 {% endblock head %}
 
 {% block content %}
+<br>
     <form method="POST" action={% url 'app_prodotti:compareCategories' %}> {% csrf_token %}
         {{ form.as_p }}
         {% comment %} <input type="submit" value="Paragona" /> {% endcomment %}
