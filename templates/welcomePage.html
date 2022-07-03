@@ -42,7 +42,7 @@
                     {% for product in suggestedProductBySameCategory %}
                         <div class="card">
                             <div class="card-content">
-                                <img src="{{ product.image.url }}" alt="" class="card-img">
+                                <img src="{{ product.image.url }}" alt="" class="card-img" onerror="this.onerror=null; this.src='{% static product.image.url %}'">
                                 <h1 class="card-title">{{ product.name }}</h1>
                                 <div class="card-body">
                                     <div class="card-star">
@@ -71,7 +71,7 @@
                     {% for product in suggestedProductBySameBrand %}
                         <div class="card">
                             <div class="card-content">
-                                <img src="{{ product.image.url }}" alt="" class="card-img">
+                                <img src="{{ product.image.url }}" alt="" class="card-img" onerror="this.onerror=null; this.src='{% static product.image.url %}'">
                                 <h1 class="card-title">{{ product.name }}</h1>
                                 <div class="card-body">
                                     <div class="card-star">
