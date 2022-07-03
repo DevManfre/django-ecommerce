@@ -1,0 +1,32 @@
+{% extends 'baseEcommerce.html' %}
+
+{% block title %}
+    Cronologia
+{% endblock title %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/chronology.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <div class="timeline">
+        <div class="timeline-body">
+            {% for order in orders %}
+                <a href="{% url 'app_prodotti:productDetails' order.product_id %}">
+                    <div class="timeline-item">
+                        <p class="time">{{ order.date }}</p>
+                        <div class="content">
+                            <h2 class="title"> {{ order }} </h2>
+                            <h3 class=""> Quantità: {{ order.quantity }} </h3><br>
+                            <p>
+                                {{ order.product.description }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+      </div>
+{% endblock content %}

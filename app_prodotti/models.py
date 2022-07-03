@@ -110,7 +110,7 @@ class Order(Model):
     date = DateField(default=timezone.now())
 
     def __str__(self):
-        return f'{self.user} - {self.quantity} * {self.product}'
+        return f'{self.product}'
     
     class Meta:
         verbose_name_plural = 'Ordini'

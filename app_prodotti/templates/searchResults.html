@@ -13,6 +13,7 @@
 {% endblock head %}
 
 {% block content %}
+<br>
     <form method="POST" action="{% url 'app_prodotti:searchResults' %}">{% csrf_token %}
         <div class="center">
             <select name="category">
