@@ -20,7 +20,7 @@ I punti facoltativi sono:
 - Installare tutte le librerie necessarie con 'pipenv install'
 - Avviare il server con il comando 'python manage.py runserver'
 - In caso dia errore con il database, bisogna:
-    - Commentare le chiamate di creazione ed eliminazione del DB;
+    - Commentare le chiamate di creazione ed eliminazione del DB nel file '7sito_ecommerce/urls.py';
     - Eseguire una migrazione con 'python manage.py migrate'
     - Decommentare le chiamate commentate precedentemente
 
