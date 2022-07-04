@@ -11,7 +11,7 @@ L'e-commerce deve supportare i seguenti punti:
 6. presenza di un sistema di recommendation basato su prezzi, caratteristiche simili, suggerimenti…
 
 I punti facoltativi sono:
-1. presenza del meccanismo di “carrello”, gli utenti registrati come acquirenti possono aggiungere prodotti al carrello, confermare acquisto di tutto il carrello o di una parte di esso. Il checkout prevede pagamento tramite bonifico. Il venditore riceve una notifica rispetto al nuovo acquisto e può confermare pagamento e spedizione effettuata. L’acquirente riceve una notifica di spedizione effettuata e può confermare la ricezione del prodotto.
+1. presenza del meccanismo di “carrello”, gli utenti registrati come acquirenti possono aggiungere prodotti al carrello, confermare acquisto di tutto il carrello o di una parte di esso. Il checkout prevede pagamento tramite bonifico. Il venditore riceve una notifica rispetto al nuovo acquisto e può confermare pagamento e spedizione effettuata. L’acquirente riceve una notifica di spedizione effettuata.
 2. presenza di una cronologia di ordini (in stile amazon) che permetta all’acquirente di visualizzare tutti i prodotti da lui precedentemente comprati.
 3. funzionalità di forum al sito: possibilità per gli utenti di porre domande ai fornitori o domande alle quali possono rispondere altri clienti. Inserire la ricezione di notifiche quando si riceve una risposta. Aggiungere la possibilità di seguire un thread nel forum e ricevere notifiche quando ci sono nuovi post ai thread seguiti e mail di riassunto con periodicità impostabile.
 
