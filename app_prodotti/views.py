@@ -267,7 +267,7 @@ def searchResults(request):
 def chronology(request):
     template = 'chronology.html'
     ctx = {
-        'orders': Order.objects.filter(user_id=request.user.id, order_type=2).order_by('-date').select_related('product')
+        'orders': Order.objects.filter(user_id=request.user.id, order_type=3).order_by('-date').select_related('product')
     }
     
     return render(request, template_name=template, context=ctx)
