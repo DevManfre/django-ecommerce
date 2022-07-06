@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+
+button.button-link {
+    margin: 30px;
+}
+
+input {
+    display: none;
+}

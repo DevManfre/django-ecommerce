@@ -56,14 +56,13 @@ class Product(Model):
         scores = ProductScore.objects.filter(product=self)
         nScores = len(scores)
 
-        for score in scores:
-            totalScore += score.value
+        if nScores != 0:
+            for score in scores:
+                totalScore += score.value
         
-        try:
             return int(totalScore/nScores)
-        except:
-            #Non esistono score per questo prodotto
-            return 0
+        
+        return 0
 
     class Meta:
         verbose_name_plural = 'Prodotti'

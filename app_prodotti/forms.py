@@ -17,5 +17,12 @@ class vendorReviewForm(Form):
         choices=CHOICE_LIST
     )
 
-class productReviewForm(vendorReviewForm):
-    review_text = Textarea()
+class productReviewForm(Form):
+    CHOICE_LIST = [(i,i) for i in range(1,11)]
+    review_value = ChoiceField(
+        label="Punteggio ",
+        required=True,
+        choices=CHOICE_LIST
+    )
+
+    review_text = CharField()

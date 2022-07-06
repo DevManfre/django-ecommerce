@@ -16,6 +16,13 @@ class productsListView(ListView):
     model = Product
     template_name = 'productsList.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['object_list'] = context['object_list'].order_by('name')
+
+        return context 
+
 class myProductsListView(ListView):
     model = Product
     template_name = 'myProductsList.html' 
@@ -177,6 +184,7 @@ def productReview(request, pk):
     ctx = {
         'form': productReviewForm(),
         "message": '',
+        "vendor": None,
         "product": pk
     }
 
@@ -255,7 +263,7 @@ def searchResults(request):
     if request.method == "POST":
         ctx['searched'] = True
         ctx['searchedText'] = request.POST['text']
-        ctx['items'] = Product.objects.filter(name__contains=request.POST['text'])
+        ctx['items'] = Product.objects.filter(name__contains=request.POST['text']).order_by('name')
         
         if request.POST['category'] != 'All':
             ctx['items'] = ctx['items'].filter(category_id=Category.objects.get(name=request.POST['category']).id)
@@ -305,14 +313,25 @@ def cartPay(request, pk):
     ctx = {
         'orders': Order.objects.filter(user_id=request.user.id, order_type=0),
         'totalPrice': 0,
-        'iban': ''
+        'iban': '', 
+        'buy_all': False,
+        'lst': []
     }
 
-    order = Order.objects.get(id=pk)
-    order.order_type = 1
-    order.save()
+    if pk == -1:
+        order = Order.objects.get(id=pk)
+        order.order_type = 1
+        order.save()
 
-    ctx['totalPrice'] = order.product.price * order.quantity
-    ctx['iban'] = order.product.vendor.iban
+        ctx['totalPrice'] = order.product.price * order.quantity
+        ctx['iban'] = order.product.vendor.iban
+    else:
+        ctx['buy_all'] = True
+
+        for order in ctx['orders']:
+            """ order.order_type = 1
+            order.save() """
+
+            order.total = order.product.price * order.quantity
 
     return render(request, template_name=template, context=ctx)
