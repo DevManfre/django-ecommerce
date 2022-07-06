@@ -177,6 +177,7 @@ def productReview(request, pk):
     ctx = {
         'form': productReviewForm(),
         "message": '',
+        "vendor": None,
         "product": pk
     }
 
@@ -305,14 +306,25 @@ def cartPay(request, pk):
     ctx = {
         'orders': Order.objects.filter(user_id=request.user.id, order_type=0),
         'totalPrice': 0,
-        'iban': ''
+        'iban': '', 
+        'buy_all': False,
+        'lst': []
     }
 
-    order = Order.objects.get(id=pk)
-    order.order_type = 1
-    order.save()
+    if pk == -1:
+        order = Order.objects.get(id=pk)
+        order.order_type = 1
+        order.save()
 
-    ctx['totalPrice'] = order.product.price * order.quantity
-    ctx['iban'] = order.product.vendor.iban
+        ctx['totalPrice'] = order.product.price * order.quantity
+        ctx['iban'] = order.product.vendor.iban
+    else:
+        ctx['buy_all'] = True
+
+        for order in ctx['orders']:
+            """ order.order_type = 1
+            order.save() """
+
+            order.total = order.product.price * order.quantity
 
     return render(request, template_name=template, context=ctx)

@@ -11,6 +11,15 @@
 {% endblock head %}
 
 {% block content %}
-<h1 class="title">Effettuare un bonifico di <span>{{ totalPrice }}</span> al seguente iban:</h1>
-<h1 class="title"><span>{{ iban }}</span></h1>
+    {% if not buy_all %}
+        <h1 class="title">Effettuare un bonifico di <span>{{ totalPrice }}</span> al seguente iban:</h1>
+        <h1 class="title"><span>{{ iban }}</span></h1>
+    {% else %}
+        {% for order in orders %}
+            <div class="payment">
+                Bonifico di {{ order.total }} a {{ order.product.vendor }} al seguente IBAN: {{ order.product.vendor.iban }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
 {% endblock content %}

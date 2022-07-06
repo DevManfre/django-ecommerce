@@ -8,9 +8,22 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/productCard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 {% endblock head %}
 
 {% block content %}
+{% if orders|length %}
+<form action="{% url 'app_prodotti:cartPay' -1 %}" methond="POST">
+    <input type="text" value="All" />
+
+    <button class="button-link">
+        <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+        </span>
+        <span class="button-text"> Ordina Tutto </span>
+    </button>
+</form>
+
 <section class="slider">
     {% for order in orders %}
     <div class="card">
@@ -32,5 +45,6 @@
     </div>
     {% endfor %}
 </section>
+{% endif %}
     
 {% endblock content %}
