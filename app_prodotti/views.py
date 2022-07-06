@@ -329,8 +329,8 @@ def cartPay(request, pk):
         ctx['buy_all'] = True
 
         for order in ctx['orders']:
-            """ order.order_type = 1
-            order.save() """
+            order.order_type = 1
+            order.save()
 
             order.total = order.product.price * order.quantity
 
