@@ -81,7 +81,9 @@
                                 <p class="card-price"> {{ product.price}}€</p>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-success">Guarda</button>
+                                <a href="{% url 'app_prodotti:productDetails' product.id %}">
+                                    <button class="btn btn-success">Guarda</button>
+                                </a>
                                 </div>
                             </div>
                         </div>  
