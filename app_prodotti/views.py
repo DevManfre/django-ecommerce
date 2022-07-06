@@ -16,6 +16,13 @@ class productsListView(ListView):
     model = Product
     template_name = 'productsList.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['object_list'] = context['object_list'].order_by('name')
+
+        return context 
+
 class myProductsListView(ListView):
     model = Product
     template_name = 'myProductsList.html' 
@@ -256,7 +263,7 @@ def searchResults(request):
     if request.method == "POST":
         ctx['searched'] = True
         ctx['searchedText'] = request.POST['text']
-        ctx['items'] = Product.objects.filter(name__contains=request.POST['text'])
+        ctx['items'] = Product.objects.filter(name__contains=request.POST['text']).order_by('name')
         
         if request.POST['category'] != 'All':
             ctx['items'] = ctx['items'].filter(category_id=Category.objects.get(name=request.POST['category']).id)
